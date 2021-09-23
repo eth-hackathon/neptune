@@ -1,0 +1,8 @@
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+
+[context.master]
+  publish = "./dist"
+  command = "npm install && npm run build"
