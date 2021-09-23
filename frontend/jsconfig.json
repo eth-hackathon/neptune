@@ -1,0 +1,10 @@
+/* Absolute imports (no nesting hell) */
+/* https://create-react-app.dev/docs/importing-a-component/#absolute-imports */
+{
+  "compilerOptions": {
+    "baseUrl": "src"
+  },
+  "include": [
+    "src"
+  ]
+}
