@@ -11,6 +11,9 @@ import About from "pages/Main/About.js";
 
 /* Dapp  Pages */
 import {Index as Product} from "pages/Dapp/Index.js";
+import Overview from "pages/Dapp/Overview.js";
+import Profile from "pages/Dapp/Profile.js";
+import Settings from "pages/Dapp/Settings.js";
 
 function App() {
   return (
@@ -22,7 +25,10 @@ function App() {
         <RouteWrapper path="/about" component={About} layout={MainLayout} />
 
         {/* Dapp pages */}
-        <RouteWrapper path="/dapp" component={Product} layout={DappLayout} />
+        <RouteWrapper exact path="/dapp" component={Product} layout={DappLayout} />
+        <RouteWrapper path="/dapp/overview" component={Overview} layout={DappLayout} />
+        <RouteWrapper path="/dapp/profile" component={Profile} layout={DappLayout} />
+        <RouteWrapper path="/dapp/settings" component={Settings} layout={DappLayout} />
       </Switch>
     </Router>
   );

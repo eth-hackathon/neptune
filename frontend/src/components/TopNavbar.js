@@ -11,7 +11,7 @@ const TopNavbar = () => {
           <div className="flex items-center h-16">
             <div className="flex items-center w-full">
               {/* Logo */}
-              <NavLink to="" className="flex-shrink-0" href="/">
+              <NavLink to="/" className="flex-shrink-0">
                 <svg
                   width="198"
                   height="43"

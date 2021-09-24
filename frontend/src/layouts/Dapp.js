@@ -1,10 +1,15 @@
 import React from "react";
+import Sidebar from "components/Sidebar.js";
 
 const Dapp = ({children}) => (
-  <div>
-    <h2>Dapp Layout missing sidenav</h2>
+  <div className="flex h-screen overflow-hidden">
+    {/* Sidebar */}
+    <Sidebar></Sidebar>
 
-    <div>{children}</div>
+    {/* Content area */}
+    <main className="relative flex flex-col flex-1 overflow-y-auto overflow-x-hidden">
+      <section>{children}</section>
+    </main>
   </div>
 );
 
