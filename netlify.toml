@@ -5,8 +5,8 @@
   status = 200
 
 [build]
-  base = "frontend"
+  base = "frontend/"
 
 [context.master]
-  publish = "frontend/dist"
+  publish = "frontend/dist/"
   command = "npm install && npm run build"
