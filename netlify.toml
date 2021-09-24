@@ -8,5 +8,5 @@
   base = "frontend/"
 
 [context.master]
-  publish = "frontend/dist/"
+  publish = "frontend/build/"
   command = "npm install && npm run build"
