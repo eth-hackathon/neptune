@@ -1,8 +1,12 @@
+# https://docs.netlify.com/configure-builds/file-based-configuration/
 [[redirects]]
   from = "/*"
   to = "/index.html"
   status = 200
 
+[build]
+  base = "frontend"
+
 [context.master]
-  publish = "./dist"
+  publish = "frontend/dist"
   command = "npm install && npm run build"
