@@ -19,6 +19,7 @@
     "husky": "^7.0.2",
     "lint-staged": "^11.1.2",
     "postcss": "^7.0.36",
+    "postcss-cli": "^7.1.2",
     "prettier": "^2.4.1",
     "tailwindcss": "npm:@tailwindcss/postcss7-compat@^2.2.14"
   },
@@ -26,7 +27,7 @@
     "build:css": "postcss src/css/tailwind.css -o src/index.css",
     "watch:css": "postcss src/css/tailwind.css -o src/index.css -w",
     "start": "npm run watch:css & craco start",
-    "build": "npm run build:css && craco build",
+    "build": "craco build",
     "test": "craco test --env=jsdom",
     "eject": "react-scripts eject"
   },
@@ -48,8 +49,14 @@
     }
   },
   "lint-staged": {
-    "*.+(js|jsx)": ["eslint --fix", "git add"],
-    "*.+(json|css|md)": ["prettier --write", "git add"]
+    "*.+(js|jsx)": [
+      "eslint --fix",
+      "git add"
+    ],
+    "*.+(json|css|md)": [
+      "prettier --write",
+      "git add"
+    ]
   },
   "browserslist": {
     "production": [
