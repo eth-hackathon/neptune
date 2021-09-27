@@ -1,3 +1,5 @@
+After pulling, do not forget to `npm install`
+
 # Folders
 
 ### Components
