@@ -1,5 +1,5 @@
 import {TileDocument} from "@ceramicnetwork/stream-tile";
-import {IDX} from "@ceramicstudio/idx";
+// import {IDX} from "@ceramicstudio/idx";
 
 export async function createStream(ceramic, content, schema, controllers, idx) {
   try {

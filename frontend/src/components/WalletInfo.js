@@ -7,7 +7,7 @@ const WalletInfo = ({connectToCeramic, loading, ceramicId}) => {
         class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 m-4 rounded"
         onClick={connectToCeramic}
       >
-        {loading ? "Connecting..." : ceramicId == "" ? "Connect Wallet" : "Connected"}
+        {loading ? "Connecting..." : ceramicId === "" ? "Connect Wallet" : "Connected"}
       </button>
     </div>
   );

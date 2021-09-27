@@ -5,9 +5,9 @@ import KeyDidResolver from "key-did-resolver";
 import {createCeramic} from "./ceramic";
 import {createIDX} from "./idx";
 import {getProvider} from "./wallet";
-import {createStream} from "./stream";
+// import {createStream} from "./stream";
 import {createCaip10Link} from "./caip10link";
-import {IDX} from "@ceramicstudio/idx";
+// import {IDX} from "@ceramicstudio/idx";
 
 const ceramicPromise = createCeramic();
 
@@ -28,7 +28,7 @@ const authenticate = async () => {
 
   const idx = createIDX(ceramic);
 
-  const accountLink = createCaip10Link(ceramic);
+  await createCaip10Link(ceramic);
 
   window.did = ceramic.did;
   window.ceramic = ceramic;

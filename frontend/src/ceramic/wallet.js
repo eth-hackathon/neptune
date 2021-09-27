@@ -5,7 +5,7 @@ export const threeID = new ThreeIdConnect();
 export async function getProvider() {
   const ethereum = window.ethereum;
 
-  if (typeof ethereum == "undefined") {
+  if (typeof ethereum === "undefined") {
     console.log("Unable to connect to Metamask, attempt fallback");
     // Show toast or something here
   }
