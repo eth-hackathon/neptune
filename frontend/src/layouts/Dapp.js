@@ -29,7 +29,7 @@ const Dapp = ({children}) => {
       <Sidebar></Sidebar>
 
       {/* Content area */}
-      <main className="relative flex flex-col flex-1 overflow-y-auto overflow-x-hidden">
+      <main className="relative flex flex-col flex-1 overflow-y-auto overflow-x-hidden bg-gray-200">
         <WalletInfo
           connectToCeramic={connectToCeramic}
           loading={loading}
