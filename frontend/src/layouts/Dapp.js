@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import {authenticate} from "../ceramic/index.js";
+import {authenticate} from "ceramic/index.js";
 import Sidebar from "components/Sidebar.js";
 import WalletInfo from "components/WalletInfo.js";
 

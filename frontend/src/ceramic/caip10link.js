@@ -17,7 +17,7 @@ export async function createCaip10Link(ceramic) {
       ":" +
       accountId.chainId.reference;
 
-    const content: {[key: string]: string} = {};
+    const content = {};
     content[ethAddress] = accountLink.id.toUrl();
 
     await window.idx.set("cryptoAccounts", content);

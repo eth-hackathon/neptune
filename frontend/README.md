@@ -1,3 +1,5 @@
+[![Netlify Status](https://api.netlify.com/api/v1/badges/532c73bd-e674-47dc-bd14-55c565324736/deploy-status)](https://app.netlify.com/sites/hackaton-neptune/deploys)
+
 After pulling, do not forget to `npm install`
 
 # Folders

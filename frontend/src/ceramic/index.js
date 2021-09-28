@@ -15,7 +15,7 @@ const authenticate = async () => {
   const [ceramic, provider] = await Promise.all([ceramicPromise, getProvider()]);
   const keyDidResolver = KeyDidResolver.getResolver();
   const threeIdResolver = ThreeIdResolver.getResolver(ceramic);
-  const resolverRegistry: ResolverRegistry = {
+  const resolverRegistry = {
     ...threeIdResolver,
     ...keyDidResolver,
   };
