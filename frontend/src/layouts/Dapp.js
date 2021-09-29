@@ -3,9 +3,10 @@ import {authenticate} from "ceramic/index.js";
 import Sidebar from "components/Sidebar.js";
 import WalletInfo from "components/WalletInfo.js";
 
-const Dapp = ({children}) => {
+const Dapp = ({children}, ...rest) => {
   const [loading, setLoading] = useState(false);
   const [ceramicId, setCeramicId] = useState("");
+  const [idx, setIdx] = useState("");
 
   const connectToCeramic = () => {
     setLoading(true);
@@ -14,6 +15,7 @@ const Dapp = ({children}) => {
       .then(async (idx) => {
         console.log("Connected to Ceramic:", idx.id);
         setCeramicId(idx.id);
+        setIdx(idx);
         setLoading(false);
       })
       .catch((err) => {
