@@ -1,9 +1,11 @@
-import React, {useState, useEffect, cloneElement} from "react";
+import React, {useState, useEffect} from "react";
 import {authenticate} from "ceramic/index.js";
 import Sidebar from "components/Sidebar.js";
 import WalletInfo from "components/WalletInfo.js";
 
 import {useLocation} from "react-router-dom";
+
+import {DappContextProvider} from "context/dappContext";
 
 const Dapp = ({children}) => {
   /* Ceramic Code */
@@ -41,9 +43,6 @@ const Dapp = ({children}) => {
     });
   }, [location]);
 
-  /* Extra prop, to test the extra prop adding */
-  const [extraProp, setExtraProp] = useState("test");
-
   return (
     <div className="flex h-screen overflow-hidden">
       {/* Sidebar */}
@@ -56,9 +55,10 @@ const Dapp = ({children}) => {
           loading={loading}
           ceramicId={ceramicId}
         />
-        {/* we use cloneElement to add extra props  to the children */}
-        {/* https://reactjs.org/docs/react-api.html#cloneelement */}
-        <section>{cloneElement(children, {extraProp, setExtraProp})}</section>
+        {/* Use the Provider, which exposes the value to the children */}
+        <DappContextProvider value={"whatever"}>
+          <section>{children}</section>
+        </DappContextProvider>
       </main>
     </div>
   );
