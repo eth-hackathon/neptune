@@ -18,6 +18,7 @@ const Dapp = ({children}) => {
     authenticate()
       .then(async (idx) => {
         console.log("Connected to Ceramic:", idx.id);
+        console.log("children", children);
         setCeramicId(idx.id);
         setLoading(false);
       })

@@ -2,39 +2,73 @@ import logo from "image/uniswap-logo.png";
 import linkIcon from "image/link.svg";
 import discord from "image/discord.svg";
 import twitter from "image/twitter.svg";
+import {NavLink} from "react-router-dom";
 
-const Overview = () => (
-  <main className="px-10 flex flex-col">
-    <div className="rounded-lg mt-5 p-5 bg-white">
-      <div className="flex flex-row justify-between items-center">
-        <div className="flex flex-row items-center ">
-          <img
-            className="bg-gray-100 rounded-full w-20 h-20 "
-            src={logo}
-            alt="uniswap-logo"
-          />
-          <p className="text-4xl font-bold pl-10">Uniswap</p>
+const Overview = () => {
+  return (
+    <main className="px-14 flex-col grid grid-cols-4 gap-6">
+      <NavLink to="/dapp/overview/uniswap">
+        <div className="rounded-lg mt-5 p-5 bg-white">
+          <div className="flex flex-col items-center">
+            <img
+              className="bg-gray-100 rounded-full w-16 h-16"
+              src={logo}
+              alt="uniswap-logo"
+            />
+            <p className="text-2xl font-semibold">Uniswap</p>
+          </div>
         </div>
-        <div className="flex flex-row justify-around gap-x-3 ">
-          <button className="w-5 h-5">
-            <img src={linkIcon} alt="link-icon" />
-          </button>
-          <button className="w-5 h-5">
-            <img src={discord} alt="discord-icon" />
-          </button>
-          <button className="w-5 h-5">
-            <img src={twitter} alt="twitter-icon" />
-          </button>
+      </NavLink>
+      <NavLink to="/dapp/overview/uniswap">
+        <div className="rounded-lg mt-5 p-5 bg-white">
+          <div className="flex flex-col items-center">
+            <img
+              className="bg-gray-100 rounded-full w-16 h-16"
+              src={logo}
+              alt="uniswap-logo"
+            />
+            <p className="text-2xl font-semibold">Uniswap</p>
+          </div>
         </div>
-      </div>
-      <p className="text-xl pt-5">A decentralized protocol for automated liquidity.</p>
-    </div>
-    <div className="rounded-lg flex flex-row justify-around mt-5 p-5 bg-white">
-      <p className="font-semibold">Reward locked</p>
-      <p className="font-semibold">Number of contributors</p>
-      <p className="font-semibold">Number of votes</p>
-    </div>
-  </main>
-);
+      </NavLink>
+      <NavLink to="/dapp/overview/uniswap">
+        <div className="rounded-lg mt-5 p-5 bg-white">
+          <div className="flex flex-col items-center">
+            <img
+              className="bg-gray-100 rounded-full w-16 h-16"
+              src={logo}
+              alt="uniswap-logo"
+            />
+            <p className="text-2xl font-semibold">Uniswap</p>
+          </div>
+        </div>
+      </NavLink>
+      <NavLink to="/dapp/overview/uniswap">
+        <div className="rounded-lg mt-5 p-5 bg-white">
+          <div className="flex flex-col items-center">
+            <img
+              className="bg-gray-100 rounded-full w-16 h-16"
+              src={logo}
+              alt="uniswap-logo"
+            />
+            <p className="text-2xl font-semibold">Uniswap</p>
+          </div>
+        </div>
+      </NavLink>
+      <NavLink to="/dapp/overview/uniswap">
+        <div className="rounded-lg mt-5 p-5 bg-white">
+          <div className="flex flex-col items-center">
+            <img
+              className="bg-gray-100 rounded-full w-16 h-16"
+              src={logo}
+              alt="uniswap-logo"
+            />
+            <p className="text-2xl font-semibold">Uniswap</p>
+          </div>
+        </div>
+      </NavLink>
+    </main>
+  );
+};
 
 export default Overview;
