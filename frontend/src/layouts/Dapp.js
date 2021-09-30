@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from "react";
+import React, {useState, useEffect, cloneElement} from "react";
 import {authenticate} from "ceramic/index.js";
 import Sidebar from "components/Sidebar.js";
 import WalletInfo from "components/WalletInfo.js";
@@ -41,6 +41,9 @@ const Dapp = ({children}) => {
     });
   }, [location]);
 
+  /* Extra prop, to test the extra prop adding */
+  const extraProp = "test";
+
   return (
     <div className="flex h-screen overflow-hidden">
       {/* Sidebar */}
@@ -53,7 +56,9 @@ const Dapp = ({children}) => {
           loading={loading}
           ceramicId={ceramicId}
         />
-        <section>{children}</section>
+        {/* we use cloneElement to add extra props  to the children */}
+        {/* https://reactjs.org/docs/react-api.html#cloneelement */}
+        <section>{cloneElement(children, {extraProp})}</section>
       </main>
     </div>
   );
