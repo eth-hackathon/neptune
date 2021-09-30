@@ -1,9 +1,12 @@
-import React, {useState} from "react";
+import React, {useState, useEffect} from "react";
 import {authenticate} from "ceramic/index.js";
 import Sidebar from "components/Sidebar.js";
 import WalletInfo from "components/WalletInfo.js";
 
+import {useLocation} from "react-router-dom";
+
 const Dapp = ({children}) => {
+  /* Ceramic Code */
   const [loading, setLoading] = useState(false);
   const [ceramicId, setCeramicId] = useState("");
 
@@ -22,6 +25,21 @@ const Dapp = ({children}) => {
         setLoading(false);
       });
   };
+
+  /* OAuth Callback stuff */
+  // On every route change, it will look for query strings
+  // And print each key/value pair
+  const location = useLocation();
+
+  useEffect(() => {
+    const queryString = location.search;
+    const params = new URLSearchParams(queryString);
+
+    params.forEach((value, key) => {
+      // We can access the key/value here, to save it or whatever
+      console.log(`key: ${key} / value: ${value}`);
+    });
+  }, [location]);
 
   return (
     <div className="flex h-screen overflow-hidden">
