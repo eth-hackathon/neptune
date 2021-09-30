@@ -42,7 +42,7 @@ const Dapp = ({children}) => {
   }, [location]);
 
   /* Extra prop, to test the extra prop adding */
-  const extraProp = "test";
+  const [extraProp, setExtraProp] = useState("test");
 
   return (
     <div className="flex h-screen overflow-hidden">
@@ -58,7 +58,7 @@ const Dapp = ({children}) => {
         />
         {/* we use cloneElement to add extra props  to the children */}
         {/* https://reactjs.org/docs/react-api.html#cloneelement */}
-        <section>{cloneElement(children, {extraProp})}</section>
+        <section>{cloneElement(children, {extraProp, setExtraProp})}</section>
       </main>
     </div>
   );
