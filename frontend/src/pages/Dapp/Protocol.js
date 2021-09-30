@@ -2,10 +2,13 @@ import logo from "image/uniswap-logo.png";
 import linkIcon from "image/link.svg";
 import discord from "image/discord.svg";
 import twitter from "image/twitter.svg";
+
 import {useParams} from "react-router-dom";
 
 const Protocol = () => {
-  //   const {protocolName} = useParams();  return Undefined in this configuration
+  const {protocolName} = useParams();
+  console.log(protocolName);
+
   return (
     <main className="px-14 flex flex-col">
       <div className="rounded-lg mt-5 p-5 bg-white">

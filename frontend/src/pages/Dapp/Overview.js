@@ -1,7 +1,7 @@
 import logo from "image/uniswap-logo.png";
-import linkIcon from "image/link.svg";
+/* import linkIcon from "image/link.svg";
 import discord from "image/discord.svg";
-import twitter from "image/twitter.svg";
+import twitter from "image/twitter.svg"; */
 import {NavLink} from "react-router-dom";
 
 const Overview = () => {
