@@ -4,8 +4,41 @@ import discord from "image/discord.svg";
 import twitter from "image/twitter.svg"; */
 import {NavLink} from "react-router-dom";
 
+const getAvailableProtocols = () => {
+  /* Backend connection to pull this data */
+  /* const gbhrtgerfds = Api.get....... */
+
+  /* Hardcoded at the moment */
+  return [
+    {
+      to: "uniswap",
+      logo: logo,
+      alt: "Uniswap Logo",
+      name: "Uniswap",
+    },
+    {
+      to: "uniswap",
+      logo: logo,
+      alt: "Uniswap Logo",
+      name: "Uniswap",
+    },
+    {
+      to: "uniswap",
+      logo: logo,
+      alt: "Uniswap Logo",
+      name: "Uniswap",
+    },
+    {
+      to: "uniswap",
+      logo: logo,
+      alt: "Uniswap Logo",
+      name: "Uniswap",
+    },
+  ];
+};
+
 const ProtocolCard = ({to, logo, alt, name}) => {
-  const url = `/dapp/overview/uniswap/${to}`;
+  const url = `/dapp/overview/${to}`;
 
   return (
     <NavLink to={url}>
@@ -20,16 +53,12 @@ const ProtocolCard = ({to, logo, alt, name}) => {
 };
 
 const Index = () => {
+  const protocols = getAvailableProtocols();
+
   return (
     <main className="grid grid-cols-4 gap-6">
-      {[...Array(5)].map((_, i) => (
-        <ProtocolCard
-          to="uniswap"
-          logo={logo}
-          alt="Uniswap Logo"
-          name="Uniswap"
-          key={i}
-        />
+      {protocols.map(({to, logo, alt, name}, i) => (
+        <ProtocolCard to={to} logo={logo} alt={alt} name={name} key={i} />
       ))}
     </main>
   );
