@@ -9,7 +9,7 @@ const ProtocolCard = ({to, logo, alt, name}) => {
 
   return (
     <NavLink to={url}>
-      <div className="rounded-lg bg-white p-5">
+      <div className="rounded-lg bg-white p-5 shadow-md">
         <div className="flex flex-col items-center">
           <img className="bg-gray-100 rounded-full w-20 h-20 m-3" src={logo} alt={alt} />
           <p className="text-3xl font-bold">{name}</p>
@@ -21,7 +21,7 @@ const ProtocolCard = ({to, logo, alt, name}) => {
 
 const Index = () => {
   return (
-    <main className="flex-col grid grid-cols-4 gap-6">
+    <main className="grid grid-cols-4 gap-6">
       {[...Array(5)].map((_, i) => (
         <ProtocolCard
           to="uniswap"
