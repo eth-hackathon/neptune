@@ -2,7 +2,6 @@
   "name": "frontend",
   "version": "0.1.0",
   "private": true,
-  "proxy": "http://localhost:8080",
   "dependencies": {
     "@3id/connect": "^0.2.5",
     "@ceramicnetwork/3id-did-resolver": "^1.4.3",

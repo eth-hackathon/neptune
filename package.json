@@ -8,24 +8,14 @@
   },
   "scripts": {
     "test": "hardhat test",
-    "start": "node app",
-    "server": "nodemon",
-    "frontend": "npm start --prefix frontend",
-    "dev": "concurrently \"npm run server\" \"npm run frontend\"",
-    "build": "npm run build --prefix frontend"
-
+    "frontend": "npm start --prefix frontend"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "cors": "^2.8.5",
-    "cross-fetch": "^3.1.4",
-    "dotenv": "^10.0.0",
-    "express": "^4.17.1"
+    "axios": "^0.22.0"
   },
   "devDependencies": {
-    "concurrently": "^6.2.2",
-    "nodemon": "^2.0.13",
     "@nomiclabs/hardhat-ethers": "^2.0.0",
     "@nomiclabs/hardhat-waffle": "^2.0.0",
     "chai": "^4.2.0",

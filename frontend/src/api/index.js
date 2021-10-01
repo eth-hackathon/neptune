@@ -1,20 +1,36 @@
-async function example({tag}) {
-  return await fetch("/api/example", {
-    method: "GET",
-    headers: {"Content-Type": "application/json"},
-  })
-    .then((response) => {
-      console.log(response);
-      // If request is not successful, display error message
-      // if (response.ok !== "true") {
-      //   throw new Error("HTTP status " + response.status);
-      // }
+import axios from "axios";
+// This will be put in a .env
+axios.defaults.baseURL = "http://localhost:8080";
 
-      return response.json();
-    })
-    .catch((err) => {
-      console.log("=>", err);
+// Example of a Get request. When you send a params object you will receive a
+// query object in Express
+async function exampleGet(params) {
+  try {
+    const response = await axios({
+      method: "get",
+      url: "/api/example",
+      params: params,
     });
+
+    return response;
+  } catch (error) {
+    console.error(error);
+  }
 }
 
-export {example};
+// Example of a Post request. When you send a data object you will receive a
+// body object in Express
+async function examplePost(body) {
+  try {
+    const response = await axios({
+      method: "post",
+      url: "/api/example",
+      data: body,
+    });
+    return response;
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+export {exampleGet, examplePost};
