@@ -39,8 +39,8 @@ const Protocol = () => {
   } = getProtocolInfo(protocolName);
 
   return (
-    <main className="px-14 flex flex-col">
-      <div className="rounded-lg mt-5 p-5 bg-white">
+    <main className="flex flex-col">
+      <div className="rounded-lg p-5 bg-white">
         <div className="flex flex-row justify-between items-center">
           {/* Protocol Logo & Name */}
           <div className="flex flex-row items-center ">

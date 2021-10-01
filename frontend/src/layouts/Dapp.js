@@ -58,7 +58,7 @@ const Dapp = ({children}) => {
         />
         {/* Use the Provider, which exposes the value to the children */}
         <DappContextProvider value={"whatever"}>
-          <section>{children}</section>
+          <section className="px-14 mt-5">{children}</section>
         </DappContextProvider>
       </main>
     </div>

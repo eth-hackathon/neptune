@@ -21,7 +21,7 @@ const ProtocolCard = ({to, logo, alt, name}) => {
 
 const Index = () => {
   return (
-    <main className="px-14 mt-5 flex-col grid grid-cols-4 gap-6">
+    <main className="flex-col grid grid-cols-4 gap-6">
       {[...Array(5)].map((_, i) => (
         <ProtocolCard
           to="uniswap"
