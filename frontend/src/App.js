@@ -27,12 +27,13 @@ function App() {
 
         {/* Dapp pages */}
         <RouteWrapper exact path="/dapp" component={Product} layout={DappLayout} />
-        <RouteWrapper path="/dapp/overview/" component={Overview} layout={DappLayout} />
+
         <RouteWrapper
           path="/dapp/overview/:protocolName"
           component={Protocol}
           layout={DappLayout}
         />
+        <RouteWrapper path="/dapp/overview" component={Overview} layout={DappLayout} />
         <RouteWrapper path="/dapp/profile" component={Profile} layout={DappLayout} />
         <RouteWrapper path="/dapp/settings" component={Settings} layout={DappLayout} />
       </Switch>
