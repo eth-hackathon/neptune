@@ -11,10 +11,10 @@ import About from "pages/Main/About.js";
 
 /* Dapp  Pages */
 import {Index as Product} from "pages/Dapp/Index.js";
-import Overview from "pages/Dapp/Overview.js";
 import Profile from "pages/Dapp/Profile.js";
 import Settings from "pages/Dapp/Settings.js";
-import Protocol from "pages/Dapp/Protocol";
+import {Index as Overview} from "pages/Dapp/Overview/Index.js";
+import Protocol from "pages/Dapp/Overview/Protocol";
 
 function App() {
   return (

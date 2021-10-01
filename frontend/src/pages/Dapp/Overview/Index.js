@@ -19,7 +19,7 @@ const ProtocolCard = ({to, logo, alt, name}) => {
   );
 };
 
-const Overview = () => {
+const Index = () => {
   return (
     <main className="px-14 flex-col grid grid-cols-4 gap-6">
       {[...Array(5)].map((_, i) => (
@@ -35,4 +35,4 @@ const Overview = () => {
   );
 };
 
-export default Overview;
+export {Index};
