@@ -1,7 +1,5 @@
-const Index = () => (
-  <main>
-    <h1>Product page</h1>
-  </main>
-);
+import {Redirect} from "react-router-dom";
+
+const Index = () => <Redirect to="/dapp/overview" />;
 
 export {Index};
