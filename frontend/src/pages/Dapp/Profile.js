@@ -1,11 +1,17 @@
-import {exampleGet, examplePost} from "../../api/index";
+import {getUser, addUser} from "../../api/index";
 
 const Profile = (props) => {
   const submit = async () => {
-    var result = await exampleGet({tag: "url params"});
-    console.log("result =>", result);
-    result = await examplePost({tag: "The tag"});
-    console.log("result =>", result);
+    const streamId = await addUser({
+      stackID: "123456",
+      ethAddr: "0xEF13aAC4dBCF336Ed855a0Ee4166117332501C75",
+      protocols: ["uniswap", "sushiswap"],
+    });
+    console.log("streamId =>", streamId);
+    const stream = await getUser({
+      streamId: streamId.data,
+    });
+    console.log("stream is : ", stream.data);
   };
 
   return (

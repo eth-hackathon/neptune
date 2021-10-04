@@ -4,11 +4,11 @@ axios.defaults.baseURL = "http://localhost:8080";
 
 // Example of a Get request. When you send a params object you will receive a
 // query object in Express
-async function exampleGet(params) {
+async function getUser(params) {
   try {
     const response = await axios({
       method: "get",
-      url: "/api/example",
+      url: "/api/user",
       params: params,
     });
 
@@ -20,17 +20,18 @@ async function exampleGet(params) {
 
 // Example of a Post request. When you send a data object you will receive a
 // body object in Express
-async function examplePost(body) {
+async function addUser(body) {
   try {
     const response = await axios({
       method: "post",
-      url: "/api/example",
+      url: "/api/user",
       data: body,
     });
+
     return response;
   } catch (error) {
     console.error(error);
   }
 }
 
-export {exampleGet, examplePost};
+export {getUser, addUser};
