@@ -5,7 +5,7 @@ import KeyDidResolver from "key-did-resolver";
 import {IDX} from "@ceramicstudio/idx";
 
 import {getProvider} from "./wallet";
-import {createCaip10Link} from "./caip10link";
+// import {createCaip10Link} from "./caip10link";
 import {definitions} from "./config.json";
 
 const API_URL = "https://ceramic-clay.3boxlabs.com";
@@ -19,7 +19,7 @@ const authenticate = async () => {
   const ceramic = new Ceramic(API_URL);
   const keyDidResolver = KeyDidResolver.getResolver();
   const threeIdResolver = ThreeIdResolver.getResolver(ceramic);
-  const resolverRegistry: ResolverRegistry = {
+  const resolverRegistry = {
     ...threeIdResolver,
     ...keyDidResolver,
   };
