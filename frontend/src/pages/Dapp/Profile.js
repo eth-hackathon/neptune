@@ -1,4 +1,4 @@
-import {getUser, addUser, getServerDID} from "../../api/index";
+import {/* getUser, */ addUser, getServerDID} from "api/index";
 import {useDappContext} from "context/dappContext";
 import logo from "image/uniswap-logo.png";
 
