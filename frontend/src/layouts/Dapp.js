@@ -19,7 +19,6 @@ const Dapp = ({children}) => {
     authenticate()
       .then(async (idx) => {
         console.log("Connected to Ceramic:", idx.id);
-        console.log("children", children);
         setCeramicId(idx.id);
         setIdx(idx);
         setLoading(false);
@@ -59,8 +58,8 @@ const Dapp = ({children}) => {
           ceramicId={ceramicId}
         />
         {/* Use the Provider, which exposes the value to the children */}
-        <DappContextProvider value={"whatever"}>
-          <section>{children}</section>
+        <DappContextProvider value={idx}>
+          <section className="px-14 mt-5 h-full">{children}</section>
         </DappContextProvider>
       </main>
     </div>

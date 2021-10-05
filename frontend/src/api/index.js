@@ -12,7 +12,7 @@ async function getUser(params) {
       params: params,
     });
 
-    return response;
+    return response.data;
   } catch (error) {
     console.error(error);
   }
@@ -28,10 +28,23 @@ async function addUser(body) {
       data: body,
     });
 
-    return response;
+    return response.data;
   } catch (error) {
     console.error(error);
   }
 }
 
-export {getUser, addUser};
+async function getServerDID() {
+  try {
+    const response = await axios({
+      method: "get",
+      url: "/api/server-did",
+    });
+
+    return response.data;
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+export {getUser, addUser, getServerDID};
