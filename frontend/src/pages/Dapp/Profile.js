@@ -1,3 +1,5 @@
+import {/* getUser, */ addUser, getServerDID} from "api/index";
+import {useDappContext} from "context/dappContext";
 import logo from "image/uniswap-logo.png";
 
 const getRewardsInfo = () => {
@@ -29,6 +31,32 @@ const ProfileCard = ({children}) => {
 };
 
 const Profile = () => {
+  const idx = useDappContext();
+
+  const submit = async () => {
+    try {
+      // this should be query once when we launch the App and stored in the Context
+      // it's the DID (ID) of our ceramic backend, we need to input it to query
+      // data as shown below
+      const did = await getServerDID();
+      console.log(did);
+
+      // this create a user and store it on our ceramic backend
+      await addUser({
+        stackID: "123456",
+        ethAddr: "0xEF13aAC4dBCF336Ed855a0Ee4166117332501C75",
+        protocols: ["uniswap", "sushiswap"],
+      });
+
+      // this query the list of all our user with some info. not efficient now
+      // will change this soon
+      const res = await idx.get("profilListDef", did);
+      console.log("res : ", res);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   const rewards = getRewardsInfo();
 
   return (
@@ -63,6 +91,21 @@ const Profile = () => {
           </ProfileCard>
         ))}
       </div>
+
+      {/* the redirect URL can not be the localhost, as a trick we are using
+          tolocalhost.com that will redirect the query to our localhost */}
+      <a href="https://stackexchange.com/oauth/dialog?client_id=20956&scope=&redirect_uri=https://tolocalhost.com">
+        <button className="bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-2 px-4 m-4 rounded">
+          Connect to stack exchange
+        </button>
+      </a>
+
+      <button
+        className="bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-2 px-4 m-4 rounded"
+        onClick={submit}
+      >
+        test backend
+      </button>
     </main>
   );
 };

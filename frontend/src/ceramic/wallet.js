@@ -7,7 +7,6 @@ export async function getProvider() {
 
   if (typeof ethereum === "undefined") {
     console.log("Unable to connect to Metamask, attempt fallback");
-    // Show toast or something here
   }
 
   console.log("MetaMask is installed!");
