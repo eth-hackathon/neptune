@@ -1,5 +1,4 @@
 import React, {useState, useEffect} from "react";
-import {authenticate} from "ceramic/index.js";
 import Sidebar from "components/Sidebar.js";
 import WalletInfo from "components/WalletInfo.js";
 
@@ -7,30 +6,74 @@ import {useLocation} from "react-router-dom";
 
 import {DappContextProvider} from "context/dappContext";
 
-const Dapp = ({children}) => {
-  /* Ceramic Code */
-  const [loading, setLoading] = useState(false);
-  const [ceramicId, setCeramicId] = useState("");
-  const [idx, setIdx] = useState("");
+import {getServerDID} from "api/index";
 
-  const connectToCeramic = () => {
+import {readOnlyClient, authenticatedClient} from "identity";
+import {connect} from "ethereum";
+
+const Dapp = ({children}) => {
+  /* --- Ceramic Code --- */
+
+  // Read Only Ceramic + IDX
+  const [readOnlyClients, setReadOnlyClients] = useState({});
+  async function getReadOnlyClients() {
+    const {ceramic, idx} = await readOnlyClient();
+    setReadOnlyClients((prevState) => {
+      return {...prevState, ...{ceramic, idx}};
+    });
+  }
+
+  // getReadOnly instance on mounted
+  useEffect(() => {
+    getReadOnlyClients();
+  }, []);
+
+  // Authenticated Ceramic + IDX + DID
+  const [authenticatedClients, setAuthenticatedClients] = useState({});
+  async function getAuthenticatedClients() {
+    const {idx, ceramic, did} = await authenticatedClient();
+    setAuthenticatedClients((prevState) => {
+      return {...prevState, ...{idx, ceramic, did}};
+    });
+  }
+
+  /* --- !Ceramic Code --- */
+
+  /* --- Ethereum Code --- */
+  const [loading, setLoading] = useState(false);
+  const [ethAddress, setEthAddress] = useState("");
+
+  // Connect to wallet, triggers the getting Auth Clients
+  async function connectToEth() {
     setLoading(true);
 
-    authenticate()
-      .then(async (idx) => {
-        console.log("Connected to Ceramic:", idx.id);
-        setCeramicId(idx.id);
-        setIdx(idx);
-        setLoading(false);
-      })
-      .catch((err) => {
-        console.log(err);
-        setCeramicId("");
-        setLoading(false);
-      });
-  };
+    try {
+      const [account] = await connect();
+      setEthAddress(account);
+      setLoading(false);
 
-  /* OAuth Callback stuff */
+      // Use the address to get Auth Clients
+      getAuthenticatedClients();
+    } catch (error) {
+      setLoading(false);
+    }
+  }
+  /* --- !Ethereum Code --- */
+
+  /* --- Server Code --- */
+  const [serverDid, setServerDid] = useState("");
+
+  // On mounted, run and get the server DID
+  async function queryServer() {
+    const did = await getServerDID();
+    setServerDid(did);
+  }
+  useEffect(() => {
+    queryServer();
+  }, []);
+  /* --- !Server Code --- */
+
+  /* OAuth Callback Code */
   // On every route change, it will look for query strings
   // And print each key/value pair
   const location = useLocation();
@@ -44,6 +87,7 @@ const Dapp = ({children}) => {
       console.log(`key: ${key} / value: ${value}`);
     });
   }, [location]);
+  /* !OAuth Callback Code */
 
   return (
     <div className="flex h-screen overflow-hidden">
@@ -53,12 +97,14 @@ const Dapp = ({children}) => {
       {/* Content area */}
       <main className="relative flex flex-col flex-1 overflow-y-auto overflow-x-hidden bg-gray-200">
         <WalletInfo
-          connectToCeramic={connectToCeramic}
+          connectToEth={connectToEth}
           loading={loading}
-          ceramicId={ceramicId}
+          ethAddress={ethAddress}
         />
         {/* Use the Provider, which exposes the value to the children */}
-        <DappContextProvider value={idx}>
+        <DappContextProvider
+          value={{ethAddress, serverDid, readOnlyClients, authenticatedClients}}
+        >
           <section className="px-14 mt-5 h-full">{children}</section>
         </DappContextProvider>
       </main>
