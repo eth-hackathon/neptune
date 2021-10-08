@@ -41,8 +41,7 @@ const Profile = () => {
   if (process.env.NODE_ENV === "production") {
     redirect_uri = "https://hackaton-neptune.netlify.app/dapp";
   } else {
-    redirect_uri =
-      "https://stackexchange.com/oauth/dialog?client_id=20956&scope=&redirect_uri=https://tolocalhost.com/?hostname=localhost:3000/dapp";
+    redirect_uri = "https://tolocalhost.com/?hostname=localhost:3000/dapp";
   }
   const fullURL = `${stackexchangeURL}${redirect_uri}`;
 
