@@ -1,4 +1,4 @@
-import {/* getUser, */ addUser, getServerDID} from "api/index";
+import {addUser} from "api/index";
 import {useDappContext} from "context/dappContext";
 import logo from "image/uniswap-logo.png";
 
@@ -31,27 +31,26 @@ const ProfileCard = ({children}) => {
 };
 
 const Profile = () => {
-  const idx = useDappContext();
+  const {ethAddress, serverDid, readOnlyClients, authenticatedClients} = useDappContext();
 
   const submit = async () => {
     try {
-      // this should be query once when we launch the App and stored in the Context
-      // it's the DID (ID) of our ceramic backend, we need to input it to query
-      // data as shown below
-      const did = await getServerDID();
-      console.log(did);
-
       // this create a user and store it on our ceramic backend
       await addUser({
         stackID: "123456",
-        ethAddr: "0xEF13aAC4dBCF336Ed855a0Ee4166117332501C75",
+        ethAddr: ethAddress,
         protocols: ["uniswap", "sushiswap"],
       });
 
       // this query the list of all our user with some info. not efficient now
       // will change this soon
-      const res = await idx.get("profilListDef", did);
-      console.log("res : ", res);
+      if (Object.keys(authenticatedClients)) {
+        const res = await authenticatedClients.idx.get("profilListDef", serverDid);
+        console.log("res : ", res);
+      } else {
+        const res = await readOnlyClients.idx.get("profilListDef", serverDid);
+        console.log("res : ", res);
+      }
     } catch (error) {
       console.log(error);
     }
@@ -99,13 +98,14 @@ const Profile = () => {
           Connect to stack exchange
         </button>
       </a>
-
-      <button
-        className="bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-2 px-4 m-4 rounded"
-        onClick={submit}
-      >
-        test backend
-      </button>
+      {ethAddress ? (
+        <button
+          className="bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-2 px-4 m-4 rounded"
+          onClick={submit}
+        >
+          test backend
+        </button>
+      ) : null}
     </main>
   );
 };

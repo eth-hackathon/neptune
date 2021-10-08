@@ -1,13 +1,23 @@
-const WalletInfo = ({connectToCeramic, loading, ceramicId}) => {
+const WalletInfo = ({connectToEth, loading, ethAddress}) => {
+  let displayAddress = "";
+  if (ethAddress !== "") {
+    const firstLetters = ethAddress?.slice(0, 5);
+    const lastLetters = ethAddress?.slice(-5);
+
+    displayAddress = `${firstLetters}...${lastLetters}`;
+  }
+
   return (
     <div className="flex flex-row justify-end">
-      {/* We could add info like number of token or network */}
-
       <button
         className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 m-4 rounded"
-        onClick={connectToCeramic}
+        onClick={connectToEth}
       >
-        {loading ? "Connecting..." : ceramicId === "" ? "Connect Wallet" : "Connected"}
+        {loading
+          ? "Connecting..."
+          : displayAddress === ""
+          ? "Connect Wallet"
+          : displayAddress}
       </button>
     </div>
   );
