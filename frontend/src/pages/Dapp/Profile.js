@@ -35,6 +35,8 @@ const Profile = () => {
   const {ethAddress, serverDid, readOnlyClients, authenticatedClients} = useDappContext();
 
   /* Create URL depending on ENV */
+  let stackexchangeURL =
+    "https://stackexchange.com/oauth/dialog?client_id=20956&scope=&redirect_uri=";
   let redirect_uri;
   if (process.env.NODE_ENV === "production") {
     redirect_uri = "https://hackaton-neptune.netlify.app/dapp";
@@ -42,6 +44,7 @@ const Profile = () => {
     redirect_uri =
       "https://stackexchange.com/oauth/dialog?client_id=20956&scope=&redirect_uri=https://tolocalhost.com/?hostname=localhost:3000/dapp";
   }
+  const fullURL = `${stackexchangeURL}${redirect_uri}`;
 
   const submit = async () => {
     try {
@@ -101,7 +104,7 @@ const Profile = () => {
         ))}
       </div>
 
-      <a href={redirect_uri}>
+      <a href={fullURL}>
         <button className="bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-2 px-4 m-4 rounded">
           Connect to stack exchange
         </button>
