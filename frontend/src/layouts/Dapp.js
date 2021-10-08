@@ -79,8 +79,10 @@ const Dapp = ({children}) => {
   const location = useLocation();
 
   useEffect(() => {
-    const queryString = location.search;
+    const queryString = location.hash.slice(1); // Removes the # at the start
     const params = new URLSearchParams(queryString);
+
+    console.log({params});
 
     params.forEach((value, key) => {
       // We can access the key/value here, to save it or whatever

@@ -31,7 +31,17 @@ const ProfileCard = ({children}) => {
 };
 
 const Profile = () => {
+  /* Get Context data */
   const {ethAddress, serverDid, readOnlyClients, authenticatedClients} = useDappContext();
+
+  /* Create URL depending on ENV */
+  let redirect_uri;
+  if (process.env.NODE_ENV === "production") {
+    redirect_uri = "https://hackaton-neptune.netlify.app/dapp";
+  } else {
+    redirect_uri =
+      "https://stackexchange.com/oauth/dialog?client_id=20956&scope=&redirect_uri=https://tolocalhost.com/?hostname=localhost:3000/dapp";
+  }
 
   const submit = async () => {
     try {
@@ -91,9 +101,7 @@ const Profile = () => {
         ))}
       </div>
 
-      {/* the redirect URL can not be the localhost, as a trick we are using
-          tolocalhost.com that will redirect the query to our localhost */}
-      <a href="https://stackexchange.com/oauth/dialog?client_id=20956&scope=&redirect_uri=https://tolocalhost.com">
+      <a href={redirect_uri}>
         <button className="bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-2 px-4 m-4 rounded">
           Connect to stack exchange
         </button>
