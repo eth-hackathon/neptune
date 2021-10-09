@@ -5,13 +5,19 @@ const expires = localStorage.getItem("expires");
 const api_url = "https://api.stackexchange.com/2.3/";
 
 async function exampleRequest() {
+  if (!access_token || !expires) {
+    console.log("no token error");
+    return {
+      error: "The user has not authenticated.",
+    };
+  }
+
   const today = new Date();
   const expires_in = add(today, {seconds: expires});
-
   if (!isFuture(expires_in)) {
     console.log("error");
 
-    return {error: "The token is expired"};
+    return {error: "The token has expired."};
 
     // Handle the refresh of the token
   }
