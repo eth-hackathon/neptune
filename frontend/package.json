@@ -13,6 +13,7 @@
     "@testing-library/react": "^11.2.7",
     "@testing-library/user-event": "^12.8.3",
     "axios": "^0.22.0",
+    "date-fns": "^2.25.0",
     "dids": "^2.4.0",
     "key-did-resolver": "^1.4.0",
     "react": "^17.0.2",

@@ -1,4 +1,6 @@
 import {addUser} from "api/index";
+import {exampleRequest} from "api/external/stackExchange";
+
 import {useDappContext} from "context/dappContext";
 import logo from "image/uniswap-logo.png";
 
@@ -35,16 +37,15 @@ const Profile = () => {
   const {ethAddress, serverDid, readOnlyClients, authenticatedClients} = useDappContext();
 
   /* Create URL depending on ENV */
-  let stackexchangeURL =
+  const stackexchangeURL =
     "https://stackexchange.com/oauth/dialog?client_id=20956&scope=&redirect_uri=";
-  let redirect_uri;
-  if (process.env.NODE_ENV === "production") {
-    redirect_uri = "https://hackaton-neptune.netlify.app/dapp";
-  } else {
-    redirect_uri = "https://tolocalhost.com/?hostname=localhost:3000/dapp";
-  }
+
+  // `redirect_uri` needs to be changed once we go live
+  // const redirect_uri = "https://hackaton-neptune.netlify.app/dapp";
+  const redirect_uri = "https://tolocalhost.com/?hostname=localhost:3000/dapp";
   const fullURL = `${stackexchangeURL}${redirect_uri}`;
 
+  // Submit data to backend to add a new user, then read with whatever client is available
   const submit = async () => {
     try {
       // this create a user and store it on our ceramic backend
@@ -56,10 +57,12 @@ const Profile = () => {
 
       // this query the list of all our user with some info. not efficient now
       // will change this soon
-      if (Object.keys(authenticatedClients)) {
+      if (Object.keys(authenticatedClients).length > 0) {
+        window.console.log("authenticatedClients ", authenticatedClients);
         const res = await authenticatedClients.idx.get("profilListDef", serverDid);
         console.log("res : ", res);
       } else {
+        window.console.log("readOnlyClients ", readOnlyClients);
         const res = await readOnlyClients.idx.get("profilListDef", serverDid);
         console.log("res : ", res);
       }
@@ -104,10 +107,17 @@ const Profile = () => {
       </div>
 
       <a href={fullURL}>
+        {/* We could decide not to show this if `localStorage.getItem("access_token")` exists */}
         <button className="bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-2 px-4 m-4 rounded">
           Connect to stack exchange
         </button>
       </a>
+      <button
+        className="bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-2 px-4 m-4 rounded"
+        onClick={exampleRequest}
+      >
+        test stackechange
+      </button>
       {ethAddress ? (
         <button
           className="bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-2 px-4 m-4 rounded"

@@ -79,14 +79,23 @@ const Dapp = ({children}) => {
   const location = useLocation();
 
   useEffect(() => {
+    const expectedKeys = ["access_token", "expires"];
+
     const queryString = location.hash.slice(1); // Removes the # at the start
     const params = new URLSearchParams(queryString);
 
-    console.log({params});
-
     params.forEach((value, key) => {
-      // We can access the key/value here, to save it or whatever
-      console.log(`key: ${key} / value: ${value}`);
+      if (expectedKeys.includes(key)) {
+        // Handle `access_token`
+        if (key === "access_token") {
+          localStorage.setItem(key, value);
+        }
+
+        // Handle `expires`
+        if (key === "expires") {
+          localStorage.setItem(key, value);
+        }
+      }
     });
   }, [location]);
   /* !OAuth Callback Code */
