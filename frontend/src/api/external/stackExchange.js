@@ -1,10 +1,11 @@
 import {add, isFuture} from "date-fns";
 
-const access_token = localStorage.getItem("access_token");
-const expires = localStorage.getItem("expires");
 const api_url = "https://api.stackexchange.com/2.3/";
 
 async function exampleRequest() {
+  const access_token = localStorage.getItem("access_token");
+  const expires = localStorage.getItem("expires");
+
   if (!access_token || !expires) {
     console.log("no token error");
     return {
