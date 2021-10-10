@@ -1,13 +1,24 @@
-//import {useDappContext} from "context/dappContext";
 import parse from "html-react-parser";
 import {useState, useEffect} from "react";
 import linkIcon from "image/link.svg";
 
 const DisplayQandA = (props) => {
-  console.log(props.list.questions);
-  const {questions, answers} = props.list;
-  const listQandA = [ModerationSchema.questions, ModerationSchema.answers].flat();
   const [index, setIndex] = useState(0);
+  //Check if props is empty to prevent the rendering of the DisplayQandA components before executing useEffect()
+  if (props.list.length == 0) {
+    return <></>;
+  }
+  const {questions, answers} = props.list;
+  const listQandA = [questions, answers].flat();
+  const moderate = (idx, isApproved) => {
+    if (isApproved === true) {
+      listQandA[idx].state = 1;
+      console.log(listQandA[idx].state);
+    } else if (isApproved === false) {
+      listQandA[idx].state = 2;
+    }
+    //what should I do if isApproved is not a boleean? Return an error  but how?
+  };
   return (
     <>
       <p className="text-2xl">{"Q&A to moderate: " + listQandA.length}</p>
@@ -32,6 +43,7 @@ const DisplayQandA = (props) => {
               if (index < listQandA.length - 1) {
                 setIndex(index + 1);
               }
+              moderate(index, true);
             }}
           >
             Approve
@@ -44,6 +56,7 @@ const DisplayQandA = (props) => {
               if (index < listQandA.length - 1) {
                 setIndex(index + 1);
               }
+              moderate(index, false);
             }}
           >
             Refuse
@@ -103,7 +116,7 @@ const DisplayQandA = (props) => {
 };
 
 const Moderation = () => {
-  const [moderationList, setModerationList] = useState("");
+  const [moderationList, setModerationList] = useState([]);
   useEffect(() => {
     //call API to ceramic to obtain list of question and answers ID + text + vote
     //const ModerationSchema = call API ceramic
@@ -121,6 +134,7 @@ const Moderation = () => {
 
 export default Moderation;
 
+//Hardcoded for now, waiting for the Ceramic call
 const ModerationSchema = {
   questions: [
     {
