@@ -5,7 +5,6 @@ import {DID} from "dids";
 import {IDX} from "@ceramicstudio/idx";
 
 import {getJsonModel} from "api/index";
-import {definitions} from "./config.json";
 
 const ceramicProvider = CeramicClient.default ? CeramicClient.default : CeramicClient;
 const threeIdProvider = ThreeIdResolver.default

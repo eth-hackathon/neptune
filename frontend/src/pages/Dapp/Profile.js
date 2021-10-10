@@ -1,4 +1,3 @@
-import {addUser} from "api/index";
 import {exampleRequest} from "api/external/stackExchange";
 
 import {useDappContext} from "context/dappContext";
