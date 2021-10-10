@@ -1,4 +1,6 @@
-import logo from "image/uniswap-logo.png";
+import uniswapLogo from "image/uniswap-logo.png";
+import aaveLogo from "image/aave.png";
+import ceramicLogo from "image/ceramic.png";
 import linkIcon from "image/link.svg";
 import discord from "image/discord.svg";
 import twitter from "image/twitter.svg";
@@ -10,16 +12,35 @@ const getProtocolInfo = (protocolName) => {
   /* const fgtrtgref = Api.get....... */
 
   /* Hardcoded at the moment */
-  return {
+  let infos = {
     name: protocolName,
+    logo: uniswapLogo,
     description: "A decentralized protocol for automated liquidity.",
     protocolLink: "https://uniswap.org/",
     discordLink: "https://discord.gg/FCfyBSbCU5",
     twitterLink: "https://twitter.com/Uniswap",
     rewardsLocked: "15k $UNI",
-    contributorsNumber: "2532",
-    votesNumber: "999",
+    contributorsNumber: "20",
+    votesNumber: "340",
   };
+
+  if (protocolName === "aave") {
+    infos = {
+      name: protocolName,
+      logo: aaveLogo,
+      description:
+        "Aave is an open source and non-custodial liquidity protocol\
+      for earning interest on deposits and borrowing assets.",
+      protocolLink: "https://aave.com/",
+      discordLink: "https://discord.gg/FCfyBSbCU5",
+      twitterLink: "https://twitter.com/Uniswap",
+      rewardsLocked: "10k $AAVE",
+      contributorsNumber: "18",
+      votesNumber: "273",
+    };
+  }
+
+  return infos;
 };
 
 const Protocol = () => {
@@ -29,6 +50,7 @@ const Protocol = () => {
   /* Get protocol info */
   const {
     name,
+    logo,
     description,
     rewardsLocked,
     contributorsNumber,
