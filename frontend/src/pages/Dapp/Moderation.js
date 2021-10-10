@@ -14,13 +14,16 @@ const DisplayQandA = (props) => {
   const moderate = (idx, isApproved) => {
     if (isApproved === true) {
       listQandA[idx].state = 1;
-      console.log(listQandA[idx].state);
     } else if (isApproved === false) {
       listQandA[idx].state = 2;
     }
     setIndexMod(indexMod + 1);
-    //what should I do if isApproved is not a boleean? Return an error  but how?
+    //what should I do if isApproved is not a boleean? Return an error?
   };
+  if (indexMod === listQandA.length) {
+    console.log(props);
+    props.mod(true);
+  }
   return (
     <>
       <div className="flex flex-row justify-between">
@@ -122,6 +125,7 @@ const DisplayQandA = (props) => {
 
 const Moderation = () => {
   const [moderationList, setModerationList] = useState([]);
+  const [isModerated, setIsModerated] = useState(false);
   useEffect(() => {
     //call API to ceramic to obtain list of question and answers ID + text + vote
     //const ModerationSchema = call API ceramic
@@ -130,9 +134,8 @@ const Moderation = () => {
   }, []);
   return (
     <main className="flex flex-col">
-      <div>
-        <DisplayQandA list={moderationList} />
-      </div>
+      {!isModerated && <DisplayQandA list={moderationList} mod={setIsModerated} />}
+      {isModerated && <p>Finish</p>}
     </main>
   );
 };
