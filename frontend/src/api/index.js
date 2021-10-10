@@ -47,4 +47,17 @@ async function getServerDID() {
   }
 }
 
-export {getUser, addUser, getServerDID};
+async function getJsonModel() {
+  try {
+    const response = await axios({
+      method: "get",
+      url: "/api/json-model",
+    });
+
+    return response.data;
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+export {getUser, addUser, getServerDID, getJsonModel};
