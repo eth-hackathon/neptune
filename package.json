@@ -32,9 +32,5 @@
     "hardhat": "^2.0.4",
     "husky": "^4.2.5"
   },
-  "dependencies": {
-    "@ceramicnetwork/3id-did-resolver": "^1.4.3",
-    "axios": "^0.22.0",
-    "html-react-parser": "^1.4.0"
-  }
+  "dependencies": {}
 }
