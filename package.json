@@ -1,28 +1,18 @@
 {
-  "name": "hardhat-hackathon-boilerplate",
+  "name": "neptune",
   "version": "1.0.0",
-  "description": "A boilerplate repository to get you started with Hardhat and Ethereum development",
+  "private": true,
+  "description": "ETH online hackathon, project Neptune",
   "directories": {
     "test": "test"
   },
   "scripts": {
-    "test": "hardhat test"
+    "test": "hardhat test",
+    "frontend": "npm start --prefix frontend"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/nomiclabs/hardhat-hackathon-boilerplate.git"
-  },
-  "keywords": [
-    "hardhat",
-    "ethereum",
-    "hackathon"
-  ],
-  "author": "Nomic Labs",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/nomiclabs/hardhat-hackathon-boilerplate/issues"
-  },
-  "homepage": "https://github.com/nomiclabs/hardhat-hackathon-boilerplate#readme",
+  "author": "",
+  "license": "ISC",
+  "dependencies": {},
   "devDependencies": {
     "@nomiclabs/hardhat-ethers": "^2.0.0",
     "@nomiclabs/hardhat-waffle": "^2.0.0",
@@ -31,6 +21,5 @@
     "ethers": "^5.0.0",
     "hardhat": "^2.0.4",
     "husky": "^4.2.5"
-  },
-  "dependencies": {}
+  }
 }
