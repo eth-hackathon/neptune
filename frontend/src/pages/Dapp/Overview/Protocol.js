@@ -45,22 +45,37 @@ const Protocol = () => {
           {/* Protocol Logo & Name */}
           <div className="flex flex-row items-center ">
             <img
-              className="bg-gray-100 rounded-full w-20 h-20 "
+              className="bg-gray-100 rounded-full w-16 h-16 "
               src={logo}
               alt="uniswap-logo"
             />
-            <p className="text-4xl font-bold ml-10 capitalize">{name}</p>
+            <p className="text-3xl font-bold ml-10 capitalize">{name}</p>
           </div>
 
           {/* External Links */}
           <div className="flex flex-row justify-around gap-x-3 ">
-            <a href={protocolLink} className="w-5 h-5">
+            <a
+              href={protocolLink}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="w-5 h-5"
+            >
               <img src={linkIcon} alt="link-icon" />
             </a>
-            <a href={discordLink} className="w-5 h-5">
+            <a
+              href={discordLink}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="w-5 h-5"
+            >
               <img src={discord} alt="discord-icon" />
             </a>
-            <a href={twitterLink} className="w-5 h-5">
+            <a
+              href={twitterLink}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="w-5 h-5"
+            >
               <img src={twitter} alt="twitter-icon" />
             </a>
           </div>
