@@ -5,7 +5,7 @@ import linkIcon from "image/link.svg";
 const DisplayQandA = (props) => {
   const [index, setIndex] = useState(0);
   //Check if props is empty to prevent the rendering of the DisplayQandA components before executing useEffect()
-  if (props.list.length == 0) {
+  if (props.list.length === 0) {
     return <></>;
   }
   const {questions, answers} = props.list;
@@ -28,7 +28,7 @@ const DisplayQandA = (props) => {
           <button
             className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 my-4 rounded"
             onClick={() => {
-              if (index != 0) {
+              if (index !== 0) {
                 setIndex(index - 1);
               }
             }}
