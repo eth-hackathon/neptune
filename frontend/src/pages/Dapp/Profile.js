@@ -33,10 +33,11 @@ const ProfileCard = ({children}) => {
 };
 
 const Profile = () => {
-  /* Get Context data */
-  const {ethAddress, serverDid, readOnlyClients, authenticatedClients} = useDappContext();
+  /* Context */
+  const {ethAddress, serverDid, readOnlyClients, authenticatedClients, hasStackAuth} =
+    useDappContext();
 
-  /* Create URL depending on ENV */
+  /* StackEchange */
   const stackexchangeURL =
     "https://stackexchange.com/oauth/dialog?client_id=20956&scope=&redirect_uri=";
 
@@ -71,63 +72,85 @@ const Profile = () => {
     }
   };
 
+  /* Current rewards */
   const rewards = getRewardsInfo();
 
-  return (
-    <main className="grid place-content-center h-full">
-      <div className="flex flex-row space-x-20">
-        {rewards.map(({protocolName, tokenAmount, tokenValueUsd}, i) => (
-          <ProfileCard key={i}>
-            <div className="flex flex-col items-center">
-              {/* Logo & Name */}
-              <div className="flex flex-row items-center">
-                <img
-                  className="bg-gray-100 rounded-full w-10 h-10 mr-2"
-                  src={logo}
-                  alt="Uniswap Logo"
-                />
-                <span className="text-lg font-semibold">{protocolName}</span>
+  /* RETURN COMPONENT */
+  // User not connected
+  if (!ethAddress) {
+    return (
+      <main className="grid place-content-center h-full">
+        <p>Please connect your ETH Wallet.</p>
+      </main>
+    );
+  }
+
+  // User connected, no stackoverflow
+  if (ethAddress && !hasStackAuth) {
+    return (
+      <main className="grid place-content-center h-full">
+        <p className="text-center">Please connect to stackoverflow.</p>
+
+        <a href={fullURL}>
+          <button className="bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-2 px-4 m-4 rounded">
+            Connect to stack exchange
+          </button>
+        </a>
+      </main>
+    );
+  }
+
+  // User connected and stackoverflow auth
+  if (ethAddress && hasStackAuth) {
+    return (
+      <main className="grid place-content-center h-full">
+        <div className="flex flex-row space-x-20">
+          {rewards.map(({protocolName, tokenAmount, tokenValueUsd}, i) => (
+            <ProfileCard key={i}>
+              <div className="flex flex-col items-center">
+                {/* Logo & Name */}
+                <div className="flex flex-row items-center">
+                  <img
+                    className="bg-gray-100 rounded-full w-10 h-10 mr-2"
+                    src={logo}
+                    alt="Uniswap Logo"
+                  />
+                  <span className="text-lg font-semibold">{protocolName}</span>
+                </div>
+
+                {/* Amount */}
+                <p className="mt-5">
+                  <span className="font-bold">{tokenAmount}</span>
+                  <span className="text-gray-500"> (${tokenValueUsd})</span>
+                </p>
+
+                {/* Claim button */}
+                <div className="mt-6">
+                  <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-4 rounded">
+                    Claim
+                  </button>
+                </div>
               </div>
-
-              {/* Amount */}
-              <p className="mt-5">
-                <span className="font-bold">{tokenAmount}</span>
-                <span className="text-gray-500"> (${tokenValueUsd})</span>
-              </p>
-
-              {/* Claim button */}
-              <div className="mt-6">
-                <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-4 rounded">
-                  Claim
-                </button>
-              </div>
-            </div>
-          </ProfileCard>
-        ))}
-      </div>
-
-      <a href={fullURL}>
-        {/* We could decide not to show this if `localStorage.getItem("access_token")` exists */}
-        <button className="bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-2 px-4 m-4 rounded">
-          Connect to stack exchange
-        </button>
-      </a>
-      <button
-        className="bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-2 px-4 m-4 rounded"
-        onClick={exampleRequest}
-      >
-        test stackechange
-      </button>
-      {ethAddress ? (
+            </ProfileCard>
+          ))}
+        </div>
         <button
           className="bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-2 px-4 m-4 rounded"
-          onClick={submit}
+          onClick={exampleRequest}
         >
-          test backend
+          test stackechange
         </button>
-      ) : null}
-    </main>
-  );
+        {ethAddress ? (
+          <button
+            className="bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-2 px-4 m-4 rounded"
+            onClick={submit}
+          >
+            test backend
+          </button>
+        ) : null}
+      </main>
+    );
+  }
 };
 
 export default Profile;

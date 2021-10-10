@@ -75,7 +75,8 @@ const Dapp = ({children}) => {
 
   /* OAuth Callback Code */
   // On every route change, it will look for query strings
-  // And print each key/value pair
+  // And save the values for usage in the api
+  const [hasStackAuth, setHasStackAuth] = useState(false);
   const location = useLocation();
 
   useEffect(() => {
@@ -97,6 +98,16 @@ const Dapp = ({children}) => {
         }
       }
     });
+
+    // Save to context
+    const access_token = localStorage.getItem("access_token");
+    const expires = localStorage.getItem("expires");
+
+    if (access_token && expires) {
+      setHasStackAuth(true);
+    } else {
+      setHasStackAuth(false);
+    }
   }, [location]);
   /* !OAuth Callback Code */
 
@@ -114,7 +125,13 @@ const Dapp = ({children}) => {
         />
         {/* Use the Provider, which exposes the value to the children */}
         <DappContextProvider
-          value={{ethAddress, serverDid, readOnlyClients, authenticatedClients}}
+          value={{
+            ethAddress,
+            serverDid,
+            readOnlyClients,
+            authenticatedClients,
+            hasStackAuth,
+          }}
         >
           <section className="px-14 mt-5 h-full">{children}</section>
         </DappContextProvider>
