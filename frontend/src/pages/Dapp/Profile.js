@@ -1,4 +1,3 @@
-import {addUser} from "api/index";
 import {exampleRequest} from "api/external/stackExchange";
 
 import {useDappContext} from "context/dappContext";
@@ -50,21 +49,21 @@ const Profile = () => {
   const submit = async () => {
     try {
       // this create a user and store it on our ceramic backend
-      await addUser({
-        stackID: "123456",
-        ethAddr: ethAddress,
-        protocols: ["uniswap", "sushiswap"],
-      });
+      // await addUser({
+      //   stackID: "123456",
+      //   ethAddr: ethAddress,
+      //   protocols: ["uniswap", "sushiswap"],
+      // });
 
       // this query the list of all our user with some info. not efficient now
       // will change this soon
       if (Object.keys(authenticatedClients).length > 0) {
         window.console.log("authenticatedClients ", authenticatedClients);
-        const res = await authenticatedClients.idx.get("profilListDef", serverDid);
+        const res = await authenticatedClients.idx.get("protocolsList", serverDid);
         console.log("res : ", res);
       } else {
         window.console.log("readOnlyClients ", readOnlyClients);
-        const res = await readOnlyClients.idx.get("profilListDef", serverDid);
+        const res = await readOnlyClients.idx.get("protocolsList", serverDid);
         console.log("res : ", res);
       }
     } catch (error) {

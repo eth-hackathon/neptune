@@ -1,10 +1,10 @@
 import CeramicClient from "@ceramicnetwork/http-client";
 import ThreeIdResolver from "@ceramicnetwork/3id-did-resolver";
-import {IDX} from "@ceramicstudio/idx";
 import {EthereumAuthProvider, ThreeIdConnect} from "@3id/connect";
 import {DID} from "dids";
+import {IDX} from "@ceramicstudio/idx";
 
-import {definitions} from "./config.json";
+import {getJsonModel} from "api/index";
 
 const ceramicProvider = CeramicClient.default ? CeramicClient.default : CeramicClient;
 const threeIdProvider = ThreeIdResolver.default
@@ -74,7 +74,10 @@ async function authenticatedClient({
 
   ceramic.setDID(did);
   await ceramic.did.authenticate();
-  const idx = new IDX({ceramic, aliases: definitions});
+
+  const modelAliases = await getJsonModel();
+
+  const idx = new IDX({ceramic, aliases: modelAliases.definitions});
 
   return {
     idx,
@@ -96,7 +99,9 @@ async function readOnlyClient({
     ceramic = ceramicClient;
   }
 
-  const idx = new IDX({ceramic, aliases: definitions});
+  const modelAliases = await getJsonModel();
+
+  const idx = new IDX({ceramic, aliases: modelAliases.definitions});
   return {
     idx,
     ceramic,

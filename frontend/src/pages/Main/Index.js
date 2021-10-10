@@ -7,7 +7,7 @@ const Index = () => (
         Incentive layer on StackOverflow
       </p>
     </div>
-    <div class="mt-5">
+    <div className="mt-5">
       <SearchBar />
     </div>
   </main>
