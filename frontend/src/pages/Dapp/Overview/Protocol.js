@@ -122,6 +122,14 @@ const Protocol = () => {
           <p className="text-xl font-bold text-center">{votesNumber}</p>
         </div>
       </div>
+      <div className="flex flex-row justify-center mt-20">
+        <button
+          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 m-4 rounded"
+          onClick=""
+        >
+          Register
+        </button>
+      </div>
     </main>
   );
 };
