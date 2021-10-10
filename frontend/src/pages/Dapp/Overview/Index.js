@@ -1,40 +1,21 @@
-import logo from "image/uniswap-logo.png";
+import React, {useState, useEffect} from "react";
+import uniswapLogo from "image/uniswap-logo.png";
+import aaveLogo from "image/aave.png";
+import ceramicLogo from "image/ceramic.png";
 /* import linkIcon from "image/link.svg";
 import discord from "image/discord.svg";
 import twitter from "image/twitter.svg"; */
 import {NavLink} from "react-router-dom";
+import {useDappContext} from "context/dappContext";
 
-const getAvailableProtocols = () => {
-  /* Backend connection to pull this data */
-  /* const gbhrtgerfds = Api.get....... */
+const getAvailableProtocols = async (idx, serverDid) => {
+  try {
+    const protocolsList = await idx.get("protocolsList", serverDid);
 
-  /* Hardcoded at the moment */
-  return [
-    {
-      to: "uniswap",
-      logo: logo,
-      alt: "Uniswap Logo",
-      name: "Uniswap",
-    },
-    {
-      to: "uniswap",
-      logo: logo,
-      alt: "Uniswap Logo",
-      name: "Uniswap",
-    },
-    {
-      to: "uniswap",
-      logo: logo,
-      alt: "Uniswap Logo",
-      name: "Uniswap",
-    },
-    {
-      to: "uniswap",
-      logo: logo,
-      alt: "Uniswap Logo",
-      name: "Uniswap",
-    },
-  ];
+    console.log(protocolsList);
+  } catch (error) {
+    console.log(error);
+  }
 };
 
 const ProtocolCard = ({to, logo, alt, name}) => {
@@ -53,7 +34,46 @@ const ProtocolCard = ({to, logo, alt, name}) => {
 };
 
 const Index = () => {
-  const protocols = getAvailableProtocols();
+  const {ethAddress, serverDid, readOnlyClients, authenticatedClients, hasStackAuth} =
+    useDappContext();
+  const [protocols, setProtocols] = useState([]);
+
+  /* Tricky situation because the DappContext is slow to charge so the useEffect
+   * is being trigger before the data is available. That's why I'm checking if
+   * serverDid exist and I added it to the array in the end so that useEffect
+   * is trigger everytime this data change.
+   *
+   * To be honest it doesn't seem to be a good idea because every time I change
+   * page and come back to Overview, the useEffect is trigger.
+   */
+  useEffect(() => {
+    if (serverDid) {
+      // let data = getAvailableProtocols(readOnlyClients.idx, serverDid);
+
+      const data = [
+        {
+          to: "uniswap",
+          logo: uniswapLogo,
+          alt: "Uniswap Logo",
+          name: "Uniswap",
+        },
+        {
+          to: "aave",
+          logo: aaveLogo,
+          alt: "Uniswap Logo",
+          name: "Aave",
+        },
+        {
+          to: "ceramic",
+          logo: ceramicLogo,
+          alt: "Uniswap Logo",
+          name: "Ceramic",
+        },
+      ];
+
+      setProtocols(data);
+    }
+  }, [serverDid]);
 
   return (
     <main className="grid grid-cols-4 gap-6">
