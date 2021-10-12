@@ -1,3 +1,4 @@
+import React, {useState} from "react";
 import uniswapLogo from "image/uniswap-logo.png";
 import aaveLogo from "image/aave.png";
 import ceramicLogo from "image/ceramic.png";
@@ -20,8 +21,8 @@ const getProtocolInfo = (protocolName) => {
     discordLink: "https://discord.gg/FCfyBSbCU5",
     twitterLink: "https://twitter.com/Uniswap",
     rewardsLocked: "15k $UNI",
-    contributorsNumber: "20",
-    votesNumber: "340",
+    contributorsNumber: 0,
+    votesNumber: 0,
   };
 
   if (protocolName === "aave") {
@@ -29,14 +30,26 @@ const getProtocolInfo = (protocolName) => {
       name: protocolName,
       logo: aaveLogo,
       description:
-        "Aave is an open source and non-custodial liquidity protocol\
-      for earning interest on deposits and borrowing assets.",
+        "Aave is an open source and non-custodial liquidity protocol for earning interest on deposits and borrowing assets.",
       protocolLink: "https://aave.com/",
-      discordLink: "https://discord.gg/FCfyBSbCU5",
-      twitterLink: "https://twitter.com/Uniswap",
+      discordLink: "https://discord.com/invite/CvKUrqM",
+      twitterLink: "https://twitter.com/aaveaave",
       rewardsLocked: "10k $AAVE",
-      contributorsNumber: "18",
-      votesNumber: "273",
+      contributorsNumber: 0,
+      votesNumber: 0,
+    };
+  } else if (protocolName === "ceramic") {
+    infos = {
+      name: protocolName,
+      logo: ceramicLogo,
+      description:
+        "Ceramic is a decentralized, open source platform for creating, hosting, and sharing streams of data.",
+      protocolLink: "https://ceramic.network/",
+      discordLink: "https://discord.com/invite/6VRZpGP",
+      twitterLink: "https://twitter.com/ceramicnetwork",
+      rewardsLocked: "20k $DAI",
+      contributorsNumber: 0,
+      votesNumber: 0,
     };
   }
 
@@ -46,6 +59,7 @@ const getProtocolInfo = (protocolName) => {
 const Protocol = () => {
   /* Get protocolName from Params */
   const {protocolName} = useParams();
+  const [isRegistered, setIsRegistered] = useState(false);
 
   /* Get protocol info */
   const {
@@ -123,12 +137,22 @@ const Protocol = () => {
         </div>
       </div>
       <div className="flex flex-row justify-center mt-20">
-        <button
-          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 m-4 rounded"
-          onClick=""
-        >
-          Register
-        </button>
+        {!isRegistered && (
+          <button
+            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 m-4 rounded"
+            onClick={() => setIsRegistered(true)}
+          >
+            Register
+          </button>
+        )}
+        {isRegistered && (
+          <button
+            className="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 m-4 rounded"
+            onClick={() => setIsRegistered(true)}
+          >
+            Registered
+          </button>
+        )}
       </div>
     </main>
   );

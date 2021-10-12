@@ -5,11 +5,22 @@ import {DID} from "dids";
 import {IDX} from "@ceramicstudio/idx";
 
 import {getJsonModel} from "api/index";
+import {definitions} from "./model.json";
 
 const ceramicProvider = CeramicClient.default ? CeramicClient.default : CeramicClient;
 const threeIdProvider = ThreeIdResolver.default
   ? ThreeIdResolver.default
   : ThreeIdResolver;
+
+const getDefinitions = async () => {
+  try {
+    const modelAliases = await getJsonModel();
+    if (!modelAliases) return definitions;
+    else return modelAliases;
+  } catch (error) {
+    console.log(error);
+  }
+};
 
 async function authenticatedClient({
   endpoint = "https://ceramic-clay.3boxlabs.com",
@@ -75,9 +86,9 @@ async function authenticatedClient({
   ceramic.setDID(did);
   await ceramic.did.authenticate();
 
-  const modelAliases = await getJsonModel();
+  const definitions = getDefinitions();
 
-  const idx = new IDX({ceramic, aliases: modelAliases.definitions});
+  const idx = new IDX({ceramic, aliases: definitions});
 
   return {
     idx,
@@ -99,9 +110,9 @@ async function readOnlyClient({
     ceramic = ceramicClient;
   }
 
-  const modelAliases = await getJsonModel();
+  const definitions = getDefinitions();
 
-  const idx = new IDX({ceramic, aliases: modelAliases.definitions});
+  const idx = new IDX({ceramic, aliases: definitions});
   return {
     idx,
     ceramic,

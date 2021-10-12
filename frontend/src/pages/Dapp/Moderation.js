@@ -26,6 +26,10 @@ const DisplayQandA = (props) => {
   }
   return (
     <>
+      <p className="text-center italic">
+        This page is for protocol's owners only. It's available now for the purpose ETH
+        Online hackathon
+      </p>
       <div className="flex flex-row justify-between">
         <p className="text-2xl">{"Q&A to moderate: " + (listQandA.length - indexMod)}</p>
         <p className="text-2xl">{index + 1 + "/" + listQandA.length}</p>
@@ -123,6 +127,20 @@ const DisplayQandA = (props) => {
   );
 };
 
+const ModoDone = () => {
+  return (
+    <main className="flex flex-col items-center pt-16">
+      <p className="text-lg font-bold text-gray-600">
+        Moderation is done, you can now reward contributors
+      </p>
+
+      <button className="w-40 bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-2 px-4 m-4 rounded">
+        Airdrop rewards
+      </button>
+    </main>
+  );
+};
+
 const Moderation = () => {
   const [moderationList, setModerationList] = useState([]);
   const [isModerated, setIsModerated] = useState(false);
@@ -135,7 +153,7 @@ const Moderation = () => {
   return (
     <main className="flex flex-col">
       {!isModerated && <DisplayQandA list={moderationList} mod={setIsModerated} />}
-      {isModerated && <p>Finish</p>}
+      {isModerated && <ModoDone />}
     </main>
   );
 };

@@ -2,9 +2,6 @@ import React, {useState, useEffect} from "react";
 import uniswapLogo from "image/uniswap-logo.png";
 import aaveLogo from "image/aave.png";
 import ceramicLogo from "image/ceramic.png";
-/* import linkIcon from "image/link.svg";
-import discord from "image/discord.svg";
-import twitter from "image/twitter.svg"; */
 import {NavLink} from "react-router-dom";
 import {useDappContext} from "context/dappContext";
 
@@ -13,6 +10,7 @@ const getAvailableProtocols = async (idx, serverDid) => {
     const protocolsList = await idx.get("protocolsList", serverDid);
 
     console.log(protocolsList);
+    return protocolsList;
   } catch (error) {
     console.log(error);
   }
@@ -34,9 +32,27 @@ const ProtocolCard = ({to, logo, alt, name}) => {
 };
 
 const Index = () => {
-  const {ethAddress, serverDid, readOnlyClients, authenticatedClients, hasStackAuth} =
-    useDappContext();
-  const [protocols, setProtocols] = useState([]);
+  const {serverDid, readOnlyClients} = useDappContext();
+  const [protocols, setProtocols] = useState([
+    {
+      to: "uniswap",
+      logo: uniswapLogo,
+      alt: "Uniswap Logo",
+      name: "Uniswap",
+    },
+    {
+      to: "aave",
+      logo: aaveLogo,
+      alt: "Uniswap Logo",
+      name: "Aave",
+    },
+    {
+      to: "ceramic",
+      logo: ceramicLogo,
+      alt: "Uniswap Logo",
+      name: "Ceramic",
+    },
+  ]);
 
   /* Tricky situation because the DappContext is slow to charge so the useEffect
    * is being trigger before the data is available. That's why I'm checking if
@@ -48,35 +64,14 @@ const Index = () => {
    */
   useEffect(() => {
     if (serverDid) {
-      // let data = getAvailableProtocols(readOnlyClients.idx, serverDid);
-
-      const data = [
-        {
-          to: "uniswap",
-          logo: uniswapLogo,
-          alt: "Uniswap Logo",
-          name: "Uniswap",
-        },
-        {
-          to: "aave",
-          logo: aaveLogo,
-          alt: "Uniswap Logo",
-          name: "Aave",
-        },
-        {
-          to: "ceramic",
-          logo: ceramicLogo,
-          alt: "Uniswap Logo",
-          name: "Ceramic",
-        },
-      ];
+      let data = getAvailableProtocols(readOnlyClients.idx, serverDid);
 
       setProtocols(data);
     }
-  }, [serverDid]);
+  }, [serverDid, readOnlyClients]);
 
   return (
-    <main className="grid grid-cols-4 gap-6">
+    <main className="grid grid-cols-3 gap-6 px-10 pt-10">
       {protocols.map(({to, logo, alt, name}, i) => (
         <ProtocolCard to={to} logo={logo} alt={alt} name={name} key={i} />
       ))}
