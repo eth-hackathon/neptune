@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import uniswapLogo from "image/uniswap-logo.png";
+import uniswapLogo from "image/uniswap.png";
 import aaveLogo from "image/aave.png";
 import ceramicLogo from "image/ceramic.png";
 import linkIcon from "image/link.svg";
