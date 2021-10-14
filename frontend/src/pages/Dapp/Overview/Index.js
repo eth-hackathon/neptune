@@ -5,12 +5,19 @@ import ceramicLogo from "image/ceramic.png";
 import {NavLink} from "react-router-dom";
 import {useDappContext} from "context/dappContext";
 
-const getAvailableProtocols = async (idx, serverDid) => {
+const getAvailableProtocols = async (readOnlyClients, serverDid) => {
+  const {ceramic, idx} = readOnlyClients;
   try {
-    const protocolsList = await idx.get("protocolsList", serverDid);
+    const {list} = await idx.get("protocolsList", serverDid);
 
-    console.log(protocolsList);
-    return protocolsList;
+    const result = [];
+    for (const item of list) {
+      const stream = await ceramic.loadStream(item.id);
+      result.push(stream.content);
+    }
+    console.log(result);
+
+    return result;
   } catch (error) {
     console.log(error);
   }
@@ -63,17 +70,21 @@ const Index = () => {
    * page and come back to Overview, the useEffect is trigger.
    */
   useEffect(() => {
-    if (serverDid) {
-      let data = getAvailableProtocols(readOnlyClients.idx, serverDid);
-
-      setProtocols(data);
+    async function getProtocols() {
+      if (serverDid) {
+        let data = await getAvailableProtocols(readOnlyClients, serverDid);
+        console.log(data);
+        setProtocols(data);
+      }
     }
+
+    getProtocols();
   }, [serverDid, readOnlyClients]);
 
   return (
     <main className="grid grid-cols-3 gap-6 px-10 pt-10">
-      {protocols.map(({to, logo, alt, name}, i) => (
-        <ProtocolCard to={to} logo={logo} alt={alt} name={name} key={i} />
+      {protocols.map(({logo, alt, name}, i) => (
+        <ProtocolCard to={name} logo={logo} alt={alt} name={name} key={i} />
       ))}
     </main>
   );

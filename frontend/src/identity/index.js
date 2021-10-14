@@ -5,7 +5,7 @@ import {DID} from "dids";
 import {IDX} from "@ceramicstudio/idx";
 
 import {getJsonModel} from "api/index";
-import {definitions} from "./model.json";
+// import {definitions} from "./model.json";
 
 const ceramicProvider = CeramicClient.default ? CeramicClient.default : CeramicClient;
 const threeIdProvider = ThreeIdResolver.default
@@ -15,8 +15,8 @@ const threeIdProvider = ThreeIdResolver.default
 const getDefinitions = async () => {
   try {
     const modelAliases = await getJsonModel();
-    if (!modelAliases) return definitions;
-    else return modelAliases;
+    // if (!modelAliases) return definitions;
+    return modelAliases.definitions;
   } catch (error) {
     console.log(error);
   }
@@ -86,7 +86,7 @@ async function authenticatedClient({
   ceramic.setDID(did);
   await ceramic.did.authenticate();
 
-  const definitions = getDefinitions();
+  const definitions = await getDefinitions();
 
   const idx = new IDX({ceramic, aliases: definitions});
 
@@ -110,7 +110,7 @@ async function readOnlyClient({
     ceramic = ceramicClient;
   }
 
-  const definitions = getDefinitions();
+  const definitions = await getDefinitions();
 
   const idx = new IDX({ceramic, aliases: definitions});
   return {
