@@ -1,8 +1,9 @@
 import {add, isFuture} from "date-fns";
+import axios from "axios";
 
-const api_url = "https://api.stackexchange.com/2.3/";
+axios.defaults.baseURL = "https://api.stackexchange.com/2.3/";
 
-async function exampleRequest() {
+async function getUserInfo(idx) {
   const access_token = localStorage.getItem("access_token");
   const expires = localStorage.getItem("expires");
 
@@ -19,29 +20,22 @@ async function exampleRequest() {
     console.log("error");
 
     return {error: "The token has expired."};
-
-    // Handle the refresh of the token
   }
 
-  // Add the params
-  const url = new URL(api_url);
-  url.searchParams.append("key", access_token);
+  // add key, site and access_token
+  try {
+      const response = await axios({
+        method: "get",
+        url: "/me/",
+        params: { access_token },
+      });
 
-  console.log(url);
-
-  // Do the API Call
-  /* const response = await axios({
-    method: 'get',
-    url,
-  }) 
-  return response.data
-  */
-}
+      return response.data;
+    } catch (error) {
+      console.error(error);
+    }
+  }
 
 // ?key=U4DMV*8nvpm3EOpvf69Rxw((
 
-async function getUserInfo(value, idx) {
-  console.log("hello", value, idx);
-}
-
-export {exampleRequest, getUserInfo};
+export {getUserInfo};
