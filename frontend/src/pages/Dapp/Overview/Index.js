@@ -26,7 +26,12 @@ const getAvailableProtocols = async (readOnlyClients, serverDid) => {
 const ProtocolCard = ({to, logo, name}) => {
   const url = `/dapp/overview/${to}`;
   return (
-    <NavLink to={url}>
+    <NavLink
+      to={{
+        pathname: url,
+        protocolProps: "test", // TODO: UPDATE WITH DATA WE WANT TO PASS
+      }}
+    >
       <div className="rounded-lg bg-white p-5 shadow-md">
         <div className="flex flex-col items-center">
           <img className="bg-gray-100 rounded-full w-16 h-16 m-3" src={logo} alt="" />

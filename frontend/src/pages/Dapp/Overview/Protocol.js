@@ -56,7 +56,11 @@ const getProtocolInfo = (protocolName) => {
   return infos;
 };
 
-const Protocol = () => {
+const Protocol = ({location}) => {
+  // GET PROTOCOL PROPS
+  // TODO: GET THE ACTUAL STUFF WE WANT
+  console.log(location.protocolProps);
+
   /* Get protocolName from Params */
   const {protocolName} = useParams();
   const [isRegistered, setIsRegistered] = useState(false);
