@@ -30,8 +30,10 @@ const Dapp = ({children}) => {
 
   // Authenticated Ceramic + IDX + DID
   const [authenticatedClients, setAuthenticatedClients] = useState({});
-  async function getAuthenticatedClients() {
+  async function getAuthenticatedClients(ethAddr) {
     const {idx, ceramic, did} = await authenticatedClient();
+    idx.set("profil", {ethAddr});
+
     setAuthenticatedClients((prevState) => {
       return {...prevState, ...{idx, ceramic, did}};
     });
@@ -53,7 +55,7 @@ const Dapp = ({children}) => {
       setLoading(false);
 
       // Use the address to get Auth Clients
-      getAuthenticatedClients();
+      getAuthenticatedClients(account);
     } catch (error) {
       setLoading(false);
     }
@@ -100,6 +102,7 @@ const Dapp = ({children}) => {
     });
 
     // Save to context
+    // localStorage.clear();
     const access_token = localStorage.getItem("access_token");
     const expires = localStorage.getItem("expires");
 
@@ -114,7 +117,7 @@ const Dapp = ({children}) => {
   return (
     <div className="flex h-screen overflow-hidden">
       {/* Sidebar */}
-      <Sidebar></Sidebar>
+      <Sidebar ethAddress={ethAddress}></Sidebar>
 
       {/* Content area */}
       <main className="relative flex flex-col flex-1 overflow-y-auto overflow-x-hidden bg-gray-200">

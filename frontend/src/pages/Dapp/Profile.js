@@ -44,9 +44,8 @@ const Profile = () => {
     "https://stackexchange.com/oauth/dialog?client_id=20956&scope=&redirect_uri=";
 
   // `redirect_uri` needs to be changed once we go live
-  // const redirect_uri = "https://hackaton-neptune.netlify.app/dapp";
-  // const redirect_uri = "https://tolocalhost.com/?hostname=localhost:3000/dapp/profile";
-  const redirect_uri = "https://hackaton-neptune.netlify.app/dapp/profile";
+  const redirect_uri = "https://tolocalhost.com/?hostname=localhost:3000/dapp/profile";
+  // const redirect_uri = "https://hackaton-neptune.netlify.app/dapp/profile";
   const fullURL = `${stackexchangeURL}${redirect_uri}`;
 
   /* Current rewards */

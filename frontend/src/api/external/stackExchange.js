@@ -40,4 +40,8 @@ async function exampleRequest() {
 
 // ?key=U4DMV*8nvpm3EOpvf69Rxw((
 
-export {exampleRequest};
+async function getUserInfo(value, idx) {
+  console.log("hello", value, idx);
+}
+
+export {exampleRequest, getUserInfo};

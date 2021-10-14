@@ -26,10 +26,6 @@ const DisplayQandA = (props) => {
   }
   return (
     <>
-      <p className="text-center italic">
-        This page is for protocol's owners only. It's available now for the purpose of ETH
-        Online hackathon demonstration. Example of moderation for Uniswap.
-      </p>
       <div className="flex flex-row justify-between">
         <p className="text-2xl">{"Q&A to moderate: " + (listQandA.length - indexMod)}</p>
         <p className="text-2xl">{index + 1 + "/" + listQandA.length}</p>
