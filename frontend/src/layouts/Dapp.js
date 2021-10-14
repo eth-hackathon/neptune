@@ -52,6 +52,7 @@ const Dapp = ({children}) => {
     try {
       const [account] = await connect();
       setEthAddress(account);
+      localStorage.setItem("ethAddress", account);
       setLoading(false);
 
       // Use the address to get Auth Clients
@@ -113,6 +114,26 @@ const Dapp = ({children}) => {
     }
   }, [location]);
   /* !OAuth Callback Code */
+
+  /* Wallet reconnection on reload Code */
+  // This will only run once on load (empty array in the end of useEffect)
+  // It will reconnect a user if they already had granted us access (data saved in localStorage)
+  useEffect(() => {
+    // Fetch current walletConnect and account info from localStorage
+    const walletConnect = localStorage.getItem(
+      "-walletlink:https://www.walletlink.org:walletUsername"
+    );
+    const currentAccount = localStorage.getItem("ethAddress");
+
+    // Only try to reconnect if we have both values
+    // It'll connect the users without another prompt
+    if (walletConnect && currentAccount) {
+      console.log("reconnecting");
+      connectToEth();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+  /* !Wallet reconnection on reload Code */
 
   return (
     <div className="flex h-screen overflow-hidden">
