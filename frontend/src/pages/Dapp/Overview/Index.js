@@ -1,21 +1,21 @@
 import React, {useState, useEffect} from "react";
-import uniswapLogo from "image/uniswap-logo.png";
-import aaveLogo from "image/aave.png";
-import ceramicLogo from "image/ceramic.png";
 import {NavLink} from "react-router-dom";
 import {useDappContext} from "context/dappContext";
 
+const images = require.context("image", true);
+
 const getAvailableProtocols = async (readOnlyClients, serverDid) => {
+  console.log(readOnlyClients);
   const {ceramic, idx} = readOnlyClients;
   try {
     const {list} = await idx.get("protocolsList", serverDid);
-
     const result = [];
     for (const item of list) {
-      const stream = await ceramic.loadStream(item.id);
-      result.push(stream.content);
+      const {content} = await ceramic.loadStream(item.id);
+      const img = images(`./${content.name}.png`).default;
+      content.logo = img;
+      result.push(content);
     }
-    console.log(result);
 
     return result;
   } catch (error) {
@@ -23,14 +23,13 @@ const getAvailableProtocols = async (readOnlyClients, serverDid) => {
   }
 };
 
-const ProtocolCard = ({to, logo, alt, name}) => {
+const ProtocolCard = ({to, logo, name}) => {
   const url = `/dapp/overview/${to}`;
-
   return (
     <NavLink to={url}>
       <div className="rounded-lg bg-white p-5 shadow-md">
         <div className="flex flex-col items-center">
-          <img className="bg-gray-100 rounded-full w-16 h-16 m-3" src={logo} alt={alt} />
+          <img className="bg-gray-100 rounded-full w-16 h-16 m-3" src={logo} alt="" />
           <p className="text-2xl font-bold">{name}</p>
         </div>
       </div>
@@ -40,26 +39,7 @@ const ProtocolCard = ({to, logo, alt, name}) => {
 
 const Index = () => {
   const {serverDid, readOnlyClients} = useDappContext();
-  const [protocols, setProtocols] = useState([
-    {
-      to: "uniswap",
-      logo: uniswapLogo,
-      alt: "Uniswap Logo",
-      name: "Uniswap",
-    },
-    {
-      to: "aave",
-      logo: aaveLogo,
-      alt: "Uniswap Logo",
-      name: "Aave",
-    },
-    {
-      to: "ceramic",
-      logo: ceramicLogo,
-      alt: "Uniswap Logo",
-      name: "Ceramic",
-    },
-  ]);
+  const [protocols, setProtocols] = useState([]);
 
   /* Tricky situation because the DappContext is slow to charge so the useEffect
    * is being trigger before the data is available. That's why I'm checking if
@@ -73,7 +53,6 @@ const Index = () => {
     async function getProtocols() {
       if (serverDid) {
         let data = await getAvailableProtocols(readOnlyClients, serverDid);
-        console.log(data);
         setProtocols(data);
       }
     }
@@ -83,8 +62,8 @@ const Index = () => {
 
   return (
     <main className="grid grid-cols-3 gap-6 px-10 pt-10">
-      {protocols.map(({logo, alt, name}, i) => (
-        <ProtocolCard to={name} logo={logo} alt={alt} name={name} key={i} />
+      {protocols.map(({logo, name}, i) => (
+        <ProtocolCard to={name} logo={logo} name={name} key={i} />
       ))}
     </main>
   );
