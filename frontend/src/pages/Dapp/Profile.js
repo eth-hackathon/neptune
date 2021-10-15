@@ -3,6 +3,9 @@ import aaveLogo from "image/aave.png";
 import ceramicLogo from "image/ceramic.png";
 
 import {useDappContext} from "context/dappContext";
+import {useEffect, useState} from "react";
+
+import {getUserInfo} from "api/external/stackExchange";
 
 const getRewardsInfo = () => {
   /* Backend connection to pull this data */
@@ -37,7 +40,12 @@ const ProfileCard = ({children}) => {
 
 const Profile = () => {
   /* Context */
-  const {ethAddress, hasStackAuth} = useDappContext();
+  const {ethAddress, hasStackAuth, authenticatedClients} = useDappContext();
+  const [isStackID, setIsStackID] = useState(false);
+
+  const {idx} = authenticatedClients;
+  const apiSO = getUserInfo(idx);
+  console.log("apiSO:", apiSO);
 
   /* StackEchange */
   const stackexchangeURL =
@@ -60,6 +68,32 @@ const Profile = () => {
 
   /* Current rewards */
   const rewards = getRewardsInfo();
+
+  /*Use Effect to check if we have user's SO ID*/
+  useEffect(() => {
+    if (ethAddress && hasStackAuth) {
+      console.log("idx", idx);
+      async function getStackID() {
+        try {
+          const {stackID} = await idx.get("profil");
+          console.log("stackID1", stackID);
+          if (stackID) {
+            setIsStackID(true);
+          }
+        } catch (error) {
+          console.log(error);
+        }
+      }
+      getStackID();
+    }
+  }, [authenticatedClients]);
+
+  useEffect(() => {
+    if (setIsStackID) {
+      const apiSO = getUserInfo(idx);
+      console.log("apiSO:", apiSO);
+    }
+  }, [isStackID]);
 
   /* RETURN COMPONENT */
   // User not connected
@@ -88,6 +122,9 @@ const Profile = () => {
 
   // User connected and stackoverflow auth
   if (ethAddress && hasStackAuth) {
+    //query idx to fget profile and if no data request SO
+    //stack ID
+    //key qui permet d'identifier à nos app sut stackapp
     return (
       <main>
         <p className="text-4xl font-bold text-gray-600 pl-16">

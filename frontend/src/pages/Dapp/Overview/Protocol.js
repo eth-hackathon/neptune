@@ -59,7 +59,7 @@ const getProtocolInfo = (protocolName) => {
 const Protocol = ({location}) => {
   // GET PROTOCOL PROPS
   // TODO: GET THE ACTUAL STUFF WE WANT
-  console.log(location.protocolProps);
+  console.log("locationprops", location.protocolProps);
 
   /* Get protocolName from Params */
   const {protocolName} = useParams();

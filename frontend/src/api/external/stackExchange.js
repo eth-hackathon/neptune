@@ -1,5 +1,6 @@
 import {add, isFuture} from "date-fns";
 import axios from "axios";
+import {useState} from "react";
 
 axios.defaults.baseURL = "https://api.stackexchange.com/2.3/";
 
@@ -24,17 +25,22 @@ async function getUserInfo(idx) {
 
   // add key, site and access_token
   try {
-      const response = await axios({
-        method: "get",
-        url: "/me/",
-        params: { access_token },
-      });
-
-      return response.data;
-    } catch (error) {
-      console.error(error);
-    }
+    const response = await axios({
+      method: "get",
+      url: "/me/",
+      params: {
+        access_token: "LFlKbmmKYscGUPKYNlPSdQ))",
+        key: "CET*C8wBS4xDPrPA)DboRA((",
+        site: "ethereum",
+      },
+    });
+    const stackID = response.data.items[0].user_id;
+    idx.set("profil", {stackID});
+    return response.data;
+  } catch (error) {
+    console.error(error);
   }
+}
 
 // ?key=U4DMV*8nvpm3EOpvf69Rxw((
 
