@@ -1,82 +1,64 @@
-import React, {useState} from "react";
-import uniswapLogo from "image/uniswap.png";
-import aaveLogo from "image/aave.png";
-import ceramicLogo from "image/ceramic.png";
+import React, {useState, useEffect} from "react";
+import {useDappContext} from "context/dappContext";
 import linkIcon from "image/link.svg";
 import discord from "image/discord.svg";
 import twitter from "image/twitter.svg";
 
 import {useParams} from "react-router-dom";
 
-const getProtocolInfo = (protocolName) => {
-  /* Backend connection to pull this data */
-  /* const fgtrtgref = Api.get....... */
+const getProtocolInfo = (protocolName, protocol, serverDid) => {
+  const {name, description, logo, appUrl, socialMedia} = protocol;
+  // if protocol is undefined, need to get data from idx for the specific protocol
+  // based on protocolName
+  // also I need to use useEffect to async load the stream for epoch stat and users
 
-  /* Hardcoded at the moment */
-  let infos = {
-    name: protocolName,
-    logo: uniswapLogo,
-    description: "A decentralized protocol for automated liquidity.",
-    protocolLink: "https://uniswap.org/",
-    discordLink: "https://discord.gg/FCfyBSbCU5",
-    twitterLink: "https://twitter.com/Uniswap",
-    rewardsLocked: "15k $UNI",
-    contributorsNumber: 0,
+  return {
+    name,
+    logo,
+    description,
+    protocolLink: appUrl,
+    twitterLink: socialMedia[0].url,
+    discordLink: socialMedia[1].url,
+    rewardsLocked: "15k $",
     votesNumber: 0,
   };
-
-  if (protocolName === "aave") {
-    infos = {
-      name: protocolName,
-      logo: aaveLogo,
-      description:
-        "Aave is an open source and non-custodial liquidity protocol for earning interest on deposits and borrowing assets.",
-      protocolLink: "https://aave.com/",
-      discordLink: "https://discord.com/invite/CvKUrqM",
-      twitterLink: "https://twitter.com/aaveaave",
-      rewardsLocked: "10k $AAVE",
-      contributorsNumber: 0,
-      votesNumber: 0,
-    };
-  } else if (protocolName === "ceramic") {
-    infos = {
-      name: protocolName,
-      logo: ceramicLogo,
-      description:
-        "Ceramic is a decentralized, open source platform for creating, hosting, and sharing streams of data.",
-      protocolLink: "https://ceramic.network/",
-      discordLink: "https://discord.com/invite/6VRZpGP",
-      twitterLink: "https://twitter.com/ceramicnetwork",
-      rewardsLocked: "20k $DAI",
-      contributorsNumber: 0,
-      votesNumber: 0,
-    };
-  }
-
-  return infos;
 };
 
 const Protocol = ({location}) => {
-  // GET PROTOCOL PROPS
-  // TODO: GET THE ACTUAL STUFF WE WANT
-  console.log(location.protocolProps);
-
+  const {serverDid, authenticatedClients} = useDappContext();
   /* Get protocolName from Params */
   const {protocolName} = useParams();
-  const [isRegistered, setIsRegistered] = useState(false);
-
-  /* Get protocol info */
-  const {
+  let {
     name,
     logo,
     description,
     rewardsLocked,
-    contributorsNumber,
     votesNumber,
     protocolLink,
     twitterLink,
     discordLink,
-  } = getProtocolInfo(protocolName);
+  } = getProtocolInfo(protocolName, location.protocolProps, serverDid);
+
+  const [contributorsNum, setContributorsNum] = useState(0);
+  const [isRegistered, setIsRegistered] = useState(false);
+
+  useEffect(() => {
+    async function addProtocolToIDX() {
+      const {idx} = authenticatedClients;
+      let {protocols} = await idx.get("profil");
+
+      if (!isRegistered && protocols && protocols.includes(name)) {
+        setIsRegistered(true);
+        setContributorsNum((prevNum) => prevNum + 1);
+      } else if (isRegistered) {
+        if (protocols && protocols.includes(name)) return;
+
+        protocols = protocols ? [...protocols, name] : [name];
+        idx.set("profil", {protocols});
+      }
+    }
+    addProtocolToIDX();
+  }, [isRegistered, authenticatedClients, name]);
 
   return (
     <main className="flex flex-col">
@@ -133,7 +115,7 @@ const Protocol = ({location}) => {
         </div>
         <div>
           <p className="text-xl font-bold text-center">Number of contributors</p>
-          <p className="text-xl font-bold text-center">{contributorsNumber}</p>
+          <p className="text-xl font-bold text-center">{contributorsNum}</p>
         </div>
         <div>
           <p className="text-xl font-bold text-center">Number of votes</p>
@@ -143,17 +125,17 @@ const Protocol = ({location}) => {
       <div className="flex flex-row justify-center mt-20">
         {!isRegistered && (
           <button
-            className="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 m-4 rounded pointer-events-none"
-            onClick={() => setIsRegistered(true)}
+            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 m-4 rounded"
+            onClick={() => {
+              setIsRegistered(true);
+              setContributorsNum(contributorsNum + 1);
+            }}
           >
             Register
           </button>
         )}
         {isRegistered && (
-          <button
-            className="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 m-4 rounded"
-            onClick={() => setIsRegistered(true)}
-          >
+          <button className="bg-gray-500 text-white font-bold py-2 px-4 m-4 rounded pointer-events-none">
             Registered
           </button>
         )}
