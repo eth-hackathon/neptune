@@ -5,7 +5,6 @@ import {useDappContext} from "context/dappContext";
 const images = require.context("image", true);
 
 const getAvailableProtocols = async (readOnlyClients, serverDid) => {
-  console.log(readOnlyClients);
   const {ceramic, idx} = readOnlyClients;
   try {
     const {list} = await idx.get("protocolsList", serverDid);
@@ -23,13 +22,14 @@ const getAvailableProtocols = async (readOnlyClients, serverDid) => {
   }
 };
 
-const ProtocolCard = ({to, logo, name}) => {
-  const url = `/dapp/overview/${to}`;
+const ProtocolCard = ({item}) => {
+  const {name, logo} = item;
+  const url = `/dapp/overview/${name}`;
   return (
     <NavLink
       to={{
         pathname: url,
-        protocolProps: "test", // TODO: UPDATE WITH DATA WE WANT TO PASS
+        protocolProps: item, // TODO: UPDATE WITH DATA WE WANT TO PASS
       }}
     >
       <div className="rounded-lg bg-white p-5 shadow-md">
@@ -44,7 +44,7 @@ const ProtocolCard = ({to, logo, name}) => {
 
 const Index = () => {
   const {serverDid, readOnlyClients} = useDappContext();
-  const [protocols, setProtocols] = useState([]);
+  const [protocols, setProtocols] = useState([{}]);
 
   /* Tricky situation because the DappContext is slow to charge so the useEffect
    * is being trigger before the data is available. That's why I'm checking if
@@ -67,8 +67,8 @@ const Index = () => {
 
   return (
     <main className="grid grid-cols-3 gap-6 px-10 pt-10">
-      {protocols.map(({logo, name}, i) => (
-        <ProtocolCard to={name} logo={logo} name={name} key={i} />
+      {protocols.map((item, i) => (
+        <ProtocolCard item={item} key={i} />
       ))}
     </main>
   );

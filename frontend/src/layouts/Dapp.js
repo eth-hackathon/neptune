@@ -106,7 +106,6 @@ const Dapp = ({children}) => {
     // localStorage.clear();
     const access_token = localStorage.getItem("access_token");
     const expires = localStorage.getItem("expires");
-    console.log(access_token);
 
     if (access_token && expires) {
       setHasStackAuth(true);

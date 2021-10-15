@@ -5,7 +5,7 @@ import ceramicLogo from "image/ceramic.png";
 import {useDappContext} from "context/dappContext";
 import {useEffect, useState} from "react";
 
-import {getUserInfo} from "api/external/stackExchange";
+// import {getUserInfo} from "api/external/stackExchange";
 
 const getRewardsInfo = () => {
   /* Backend connection to pull this data */
@@ -41,11 +41,11 @@ const ProfileCard = ({children}) => {
 const Profile = () => {
   /* Context */
   const {ethAddress, hasStackAuth, authenticatedClients} = useDappContext();
-  const [isStackID, setIsStackID] = useState(false);
+  // const [isStackID, setIsStackID] = useState(false);
 
   const {idx} = authenticatedClients;
-  const apiSO = getUserInfo(idx);
-  console.log("apiSO:", apiSO);
+  // const apiSO = getUserInfo(idx);
+  // console.log("apiSO:", apiSO);
 
   /* StackEchange */
   const stackexchangeURL =
@@ -70,30 +70,30 @@ const Profile = () => {
   const rewards = getRewardsInfo();
 
   /*Use Effect to check if we have user's SO ID*/
-  useEffect(() => {
-    if (ethAddress && hasStackAuth) {
-      console.log("idx", idx);
-      async function getStackID() {
-        try {
-          const {stackID} = await idx.get("profil");
-          console.log("stackID1", stackID);
-          if (stackID) {
-            setIsStackID(true);
-          }
-        } catch (error) {
-          console.log(error);
-        }
-      }
-      getStackID();
-    }
-  }, [authenticatedClients]);
+  // useEffect(() => {
+  //   if (ethAddress && hasStackAuth) {
+  //     console.log("idx", idx);
+  //     async function getStackID() {
+  //       try {
+  //         const {stackID} = await idx.get("profil");
+  //         console.log("stackID1", stackID);
+  //         if (stackID) {
+  //           setIsStackID(true);
+  //         }
+  //       } catch (error) {
+  //         console.log(error);
+  //       }
+  //     }
+  //     getStackID();
+  //   }
+  // }, [authenticatedClients]);
 
-  useEffect(() => {
-    if (setIsStackID) {
-      const apiSO = getUserInfo(idx);
-      console.log("apiSO:", apiSO);
-    }
-  }, [isStackID]);
+  // useEffect(() => {
+  //   if (setIsStackID) {
+  //     const apiSO = getUserInfo(idx);
+  //     console.log("apiSO:", apiSO);
+  //   }
+  // }, [isStackID]);
 
   /* RETURN COMPONENT */
   // User not connected
