@@ -1,3 +1,7 @@
+![image](https://github.com/eth-hackathon/neptune/assets/33808300/cce34095-e378-422c-81d1-b123fe042c24)
+
+https://ethglobal.com/showcase/neptune-k6qq2
+
 # Hardhat Hackathon Boilerplate
 
 This repository contains a sample project that you can use as the starting point
